@@ -1,0 +1,64 @@
+body {
+    background-color: darkslategrey;
+}
+
+h1 {
+    text-align: center;
+}
+
+.content {
+    color: yellow;
+    padding: 40px 0px;
+    font-family: 'Courier New', monospace;
+}
+
+#character-editor {
+    height: 400px;
+    width: 80%;
+}
+
+#game {
+    display: none;
+}
+
+#player1-editor {
+    height: 380px;
+    width: 420px;
+    margin: 0 auto;
+}
+
+#player2-editor {
+    height: 380px;
+    width: 420px;
+    margin: 0 auto;
+}
+
+#editors {
+    top: 97px;
+    position: absolute;
+    display: flex;
+    opacity: 0.8;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#editor1 {
+    float: left;
+}
+
+#editor2 {
+    float :left;
+}
+
+#canvas {
+    text-align: center;
+}
+
+#defaultCanvas0 {
+    z-index: 2;
+    position: flex;
+
+}
+.button_wrapper {
+    text-align: center;
+}
