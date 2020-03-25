@@ -5,7 +5,6 @@ const BACKGROUND_STAR_MAX_SPEED = 4;
 const SCREEN_WIDTH = 840;
 const SCREEN_HEIGHT = 380;
 
-
 let round = 1;
 let timer = 10;
 let isRunning = false;
@@ -18,7 +17,6 @@ let player2 = null;
 let player1ShotArray = [];
 let player2ShotArray = [];
 let backgroundStarArray = [];
-
 
 let player1Image = '/img/player1.png';
 let player2Image = '/img/player2.png';
@@ -47,9 +45,7 @@ function setup() {
     textFont("Comic Sans MS");
     gameState = "Programming";
     barHeight = height / 10;
-    
 }
-
 
 function draw() {
     if (isStart === true) {
@@ -62,10 +58,10 @@ function draw() {
         player2.update();
         player1ShotArray.map((v) => {
             v.update();
-        })
+        });
         player2ShotArray.map((v) => {
             v.update();
-        })
+        });
 
         if (player1.life === 0) {
             textSize(64);
@@ -117,14 +113,27 @@ function drawParameters() {
     text(timer, width/2 - 20, 30);
 }
 
+
+socket.on('create', (code) => {
+    eval(code.code);
+    if (player1 && player2) {
+        initialize();
+    }
+});
+
+function createCharacter() {
+    document.getElementById('startButton').disabled = true;
+    socket.emit('create', {
+        code: editor.getValue()
+    });
+}
+
 function initialize() {
 
-    eval(editor.getValue());
     document.getElementById('character-programming').style.display = 'none';
     document.getElementById('game').style.display = 'block';
 
     player1.setVectorFromAngle(HALF_PI);
-    player2 = new Player(width - 40, height / 2, 64, 64, 25, 20, player2Image);
     player2.setVectorFromAngle(-HALF_PI);
 
     for (let i = 0; i < SHOT_MAX_COUNT; i++) {

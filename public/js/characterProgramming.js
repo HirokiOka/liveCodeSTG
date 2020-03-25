@@ -3,9 +3,10 @@ const editor = ace.edit("character-editor");
 editor.setFontSize(18);
 editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/javascript");
+editor.$blockScrolling = Infinity;
 
 let defaultCode = `
-class Fighter extends BaseFighter {
+class Fighter extends BaseFighter1 {
     constructor() {
         super();
         this.life = 100;

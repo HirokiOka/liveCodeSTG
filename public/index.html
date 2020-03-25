@@ -14,7 +14,7 @@
             <h1>Character Programming Mode</h1>
         </div>
         <code><pre id="character-editor"></pre></code>
-        <button onclick="initialize()">Start!</button>
+        <button id="startButton" onclick="createCharacter()">Start!</button>
     </div>
 
     <div id="game">
@@ -27,6 +27,10 @@
                 <div id="editor2">
                     <code><pre id="player2-editor"></pre></code>
                 </div>
+            </div>
+            <div id="command_line">
+                <code><pre id="command_input"></pre></code>
+                <code><pre id="command_output"></pre></code>
             </div>
             <div class="button_wrapper">
                 <button id="player1ReadyButton" onclick="player1Ready()">Ready</button>
@@ -42,6 +46,7 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="../socket.io/socket.io.js"></script>
     <script src="/js/characterProgramming.js"></script>
+    <script src="/js/hacking.js"></script>
     <script src="/js/editor.js"></script>
     <script src="/js/character.js"></script>
     <script src="/js/script.js"></script>

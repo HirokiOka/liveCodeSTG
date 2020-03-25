@@ -59,6 +59,7 @@ class Player extends Character {
         this.shotArray = null;
         this.life = 100;
         this.password = 'password';
+        this.code = null;
     }
 
     setShotArray(shotArray) {
@@ -67,6 +68,10 @@ class Player extends Character {
 
     setChargeShot(chargeShot) {
         this.chargeShot = chargeShot;
+    }
+
+    setCode(code) {
+        this.code = code;
     }
 
     moveTo(y) {
@@ -102,16 +107,7 @@ class Player extends Character {
                 }
             }
         }
-    }
-
-    hack(player, password) {
-        if (player.password === password) {
-            console.log("success");
-            console.log(enemyCode);
-        } else {
-            console.log("failure");
-        }
-    }
+    }   
 
     update() {
         if (this.life <= 0) { return; }
@@ -123,9 +119,15 @@ class Player extends Character {
     }
 }
 
-class BaseFighter extends Player {
+class BaseFighter1 extends Player {
     constructor() {
         super(40, height / 2, 64, 64, 20, 20, '/img/player1.png');
+    }
+}
+
+class BaseFighter2 extends Player {
+    constructor() {
+        super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png');
     }
 }
 
@@ -174,7 +176,6 @@ class Shot extends Character {
         this.draw();
     }
 }
-
 
 class BackgroundStar {
     constructor(size, speed, color="#ffffff") {
