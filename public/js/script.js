@@ -24,6 +24,10 @@ let shotImage = '/img/viper_shot.png';
 let misakiFont = null;
 let explosionSound = null;
 let winSound = null;
+const player1Color = "#1900b3";
+const player2Color = "#ad1500";
+const backgroundColor = "#121259"
+
 
 let ctx;
 let keyInput;
@@ -49,7 +53,7 @@ function setup() {
 
 function draw() {
     if (isStart === true) {
-        background('#111122');
+        background(backgroundColor);
         backgroundStarArray.map((v) => {
             v.update();
         });
@@ -65,14 +69,14 @@ function draw() {
 
         if (player1.life === 0) {
             textSize(64);
-            fill('#ff0000');
+            fill(player2Color);
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
             gameState = "End";
             winSound.play();
             noLoop();
         } else if (player2.life == 0) {
             textSize(64);
-            fill('#0000ff');
+            fill(player1Color);
             text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
             gameState = "End";
             winSound.play();
@@ -90,11 +94,15 @@ function draw() {
 function drawParameters() {
     noStroke();
     textSize(18);
-    fill('#0000ff');
+    fill(player1Color);
+    stroke(255);
     rect(5, height - 25, player1.life * 2, 20);
+    noStroke();
     text("player1 Life", 5, height - 30);
-    fill('#ff0000');
+    fill(player2Color);
+    stroke(255);
     rect(width / 2, height - 25, player2.life * 2, 20);
+    noStroke();
     text("player2 Life", width / 2, height - 30);
     fill(255);
     text("Round" + round, 5, 20);
@@ -102,7 +110,7 @@ function drawParameters() {
     // stroke(255);
     rect(80, 10, 200, 30, 5);
     textSize(24);
-    fill('yellow');
+    fill("#FFC038");
     text(gameState, 90, 30);
 
     if (isRunning === true) {

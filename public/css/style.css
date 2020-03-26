@@ -1,5 +1,5 @@
 body {
-    background-color: darkslategrey;
+    background-color: #121259;
 }
 
 h1 {
@@ -7,9 +7,34 @@ h1 {
 }
 
 .content {
-    color: yellow;
+    color: #FFC038;
     padding: 40px 0px;
     font-family: 'Courier New', monospace;
+}
+
+.btn-square {
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #668ad8;/*ボタン色*/
+    color: #FFF;
+    border-bottom: solid 4px #627295;
+    border-radius: 3px;
+}
+
+#player1ReadyButton {
+    background: #1900b3; 
+}
+
+#player2ReadyButton {
+    background: #ad1500;
+}
+
+.btn-square:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);/*下に動く*/
+    border-bottom: none;/*線を消す*/
 }
 
 #character-editor {

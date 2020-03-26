@@ -45,45 +45,28 @@ commandOutput.renderer.setOption("showGutter", false);
 commandOutput.setReadOnly(true);
 commandOutput.$blockScrolling = Infinity;
 
-window.addEventListener("keydown", (e) => {
+
+window.addEventListener("keydown", (e)=> {
+    if (gameState !== "Programming") { return; }
+
+    if (e.keyCode === 13 && e.ctrlKey) {
+
+        if (aceEditor1.isFocused()) {
+            player1Ready();
+        }
+
+        if (aceEditor2.isFocused()) {
+            player2Ready();
+        }
+
+    }
+
     if (e.keyCode === 13 && commandInput.isFocused()) {
         eval(commandInput.getValue());
         commandInput.setValue("");
     }
+    
 });
-
-
-window.addEventListener("keydown", (e)=> {
-    if (e.keyCode === 91) {
-        isCommandPressed = true;
-    }
-
-    if (e.keyCode === 13) {
-        isReturnPressed = true;
-    }
-
-    if (isCommandPressed === true && isReturnPressed === true && aceEditor1.isFocused()) {
-        if (gameState === "Programming") {
-            player1Ready();
-        }
-    }
-
-    if (isCommandPressed === true && isReturnPressed === true && aceEditor2.isFocused()) {
-        if (gameState === "Programming") {
-            player2Ready();
-        }
-    }
-});
-
-window.addEventListener("keyup", (e) => {
-    if (e.keyCode === 91) {
-        isCommandPressed = false;
-    }
-    if (e.keyCode === 13) {
-        isReturnPressed = false;
-    }
-});
-
 
 
 function player1Ready() {
