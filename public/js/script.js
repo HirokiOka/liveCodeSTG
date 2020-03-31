@@ -33,13 +33,16 @@ let ctx;
 let keyInput;
 let retryButton;
 
+function playCollisionSound() {
+    const collisionSound = new Audio();
+    collisionSound.src = "/sound/explosion.mp3";
+    collisionSound.play();
+}
 
-function preload() {
-    explosionSound = new Audio();
-    explosionSound.src = "/sound/explosion.mp3";
-    winSound = new Audio();
+function playWinSound() {
+    const winSound = new Audio();
     winSound.src = "/sound/clear.mp3";
-    // misakiFont = loadFont("./public/font/misaki_gothic.ttf");
+    winSound.play();
 }
 
 function setup() {
@@ -72,14 +75,14 @@ function draw() {
             fill(player2Color);
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
             gameState = "End";
-            winSound.play();
+            playWinSound();
             noLoop();
         } else if (player2.life == 0) {
             textSize(64);
             fill(player1Color);
             text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
             gameState = "End";
-            winSound.play();
+            playWinSound();
             noLoop();
         }
         
@@ -107,7 +110,6 @@ function drawParameters() {
     fill(255);
     text("Round" + round, 5, 20);
     noFill();
-    // stroke(255);
     rect(80, 10, 200, 30, 5);
     textSize(24);
     fill("#FFC038");
@@ -120,7 +122,6 @@ function drawParameters() {
     fill(255);
     text(timer, width/2 - 20, 30);
 }
-
 
 socket.on('create', (code) => {
     eval(code.code);

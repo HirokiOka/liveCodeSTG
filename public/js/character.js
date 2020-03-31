@@ -171,7 +171,7 @@ class Shot extends Character {
                 this.target.life = 0;
             }
             this.life = 0;
-            explosionSound.play();
+            playCollisionSound();
         }
         this.draw();
     }

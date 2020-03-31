@@ -13,7 +13,7 @@ class Fighter extends BaseFighter1 {
         this.speed = 25;
         this.power = 25;
         this.confidentiality = 25;
-        this.password = 'password';
+        this.password = 'pass';
     }
 }
 player1 = new Fighter();
