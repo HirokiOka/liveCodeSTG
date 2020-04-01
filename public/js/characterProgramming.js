@@ -5,8 +5,10 @@ editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/javascript");
 editor.$blockScrolling = Infinity;
 
+let clientId = document.getElementById('player-id').textContent;
+
 let defaultCode = `
-class Fighter extends BaseFighter1 {
+class Fighter${clientId} extends BaseFighter${clientId} {
     constructor() {
         super();
         this.life = 100;
@@ -16,7 +18,7 @@ class Fighter extends BaseFighter1 {
         this.password = 'pass';
     }
 }
-player1 = new Fighter();
+player${clientId} = new Fighter${clientId}();
 `;
 editor.setValue(defaultCode);
 

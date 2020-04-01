@@ -74,16 +74,12 @@ function draw() {
             textSize(64);
             fill(player2Color);
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
-            gameState = "End";
-            playWinSound();
-            noLoop();
+            finalize();
         } else if (player2.life == 0) {
             textSize(64);
             fill(player1Color);
             text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
-            gameState = "End";
-            playWinSound();
-            noLoop();
+            finalize();
         }
         
         fill(0);
@@ -169,6 +165,15 @@ function initialize() {
         backgroundStarArray[i].set(x, y);
     }
     isStart = true;
+}
+
+function finalize() {
+    gameState = "End";
+    socket.emit('gameEnd', {
+        'gameState': 'End'
+    });
+    playWinSound();
+    noLoop();
 }
 
 function keyPressed() {
