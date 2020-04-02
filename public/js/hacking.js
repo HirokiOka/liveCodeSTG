@@ -61,23 +61,6 @@ Array.prototype.repeatedPermutation = function(n){
 	return perms;
 }
 
-// const bruteForce = (player, passwordLength) => {
-//     if (passwordLength > 4) { return; }
-//     let p = elements.repeatedPermutation(passwordLength);
-
-//     p.forEach((e) => {
-//         if (e.join('') === player.password) {
-//             if (player === player2) {
-//                 aceEditor2.setValue(player.code);
-//             } else if (player === player1) {
-//                 aceEditor1.setValue(player.code);
-//             }
-//             commandOutput.setValue(`Success! password: ${player.password}`);
-//             return;
-//         }
-//     });
-//     commandOutput.setValue("Failure");
-// }
 
 const bruteForce = (player, passwordLength) => {
     if (passwordLength > 4) { return; }

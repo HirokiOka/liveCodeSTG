@@ -24,8 +24,6 @@ let shotImage = '/img/viper_shot.png';
 let misakiFont = null;
 let explosionSound = null;
 let winSound = null;
-const player1Color = "#1900b3";
-const player2Color = "#ad1500";
 const backgroundColor = "#121259"
 
 
@@ -69,8 +67,12 @@ function draw() {
         player2ShotArray.map((v) => {
             v.update();
         });
-
-        if (player1.life === 0) {
+        if (player1.life === 0 && player2.life === 0) {
+            textSize(64);
+            fill(255);
+            text('Draw!\nPress R to Retry', width / 2 - 200, height / 2);
+            finalize();
+        } else if (player1.life === 0) {
             textSize(64);
             fill(player2Color);
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
@@ -136,7 +138,7 @@ function createCharacter() {
 function initialize() {
 
     document.getElementById('character-programming').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
+    document.getElementById('game').style.visibility = 'visible';
 
     player1.setVectorFromAngle(HALF_PI);
     player2.setVectorFromAngle(-HALF_PI);

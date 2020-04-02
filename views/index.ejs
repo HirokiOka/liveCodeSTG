@@ -12,7 +12,7 @@
     <div id="character-programming">
         <div class="content">
             <h1>Character Programming Mode</h1>
-            <h2 id="player-id"><%= clientId %></h2>
+            <div id="client-id"><%= clientId %></div>
         </div>
         <code><pre id="character-editor"></pre></code>
         <button id="startButton" class="btn-square" onclick="createCharacter()">Start!</button>
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="../socket.io/socket.io.js"></script>

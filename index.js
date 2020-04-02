@@ -5,21 +5,31 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const port = process.env.PORT || 3000;
-let clientNum = 0;
+let client1 = false;
+let client2 = false;
 
 app.set('ejs', ejs.renderFile);
+app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    clientNum++;
-    if (clientNum > 2) {
-        res.send('Please Wait...');
+    if (client1 === false) {
+
+        res.render('index', { clientId: 1 });
+
+        client1 = true;
+        console.log("client connected and client1 assgined");
+
+    } else if (client2 === false) {
+
+        res.render('index', { clientId: 2 });
+
+        client2 = true;
+        console.log("client connected and client2 assgined");
+
     } else {
-        res.render('index.ejs', {
-            clientId: clientNum
-        });
+        res.send("Please wait...");
     }
-    console.log(`client${clientNum} connected`);
 });
 
 io.on('connection', (socket) => {
@@ -45,6 +55,15 @@ io.on('connection', (socket) => {
     socket.on('gameEnd', (state) => {
         console.log('Game');
         clientNum = 0;
+    });
+
+    socket.on('client disconnected', (id) => {
+        if (id.clientId == 1) {
+            client1 = false;
+        } else if (id.clientId == 2) {
+            client2 = false;
+        }
+        console.log(`client ${id.clientId} disconnected`);
     });
 
 });
