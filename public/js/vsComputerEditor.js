@@ -1,4 +1,3 @@
-// const socket = io();
 const gameInterval = 10000;
 
 let aceEditor1 = ace.edit("player1-editor");
@@ -13,23 +12,26 @@ let editor1 = document.getElementById("editor1");
 let editor2 = document.getElementById("editor2");
 let editors = document.getElementById("editors");
 let player1ReadyButton = document.getElementById("player1ReadyButton");
-let player2ReadyButton = document.getElementById("player2ReadyButton");;
 
-let enemyCode = `//Player2
-player2.randomMove();
-player2.shot();`;
+let computerCodes = [
+    "player2.randomMove();\nplayer2.shot();",
+    "player2.shot();",
+    "player2.moveTo(player1.position.y);\nplayer2.shot();"
+
+];
+
 let isCommandPressed =false;
 let isReturnPressed = false;
 
 aceEditor1.setFontSize(18);
 aceEditor1.setTheme("ace/theme/chaos");
 aceEditor1.getSession().setMode("ace/mode/javascript");
-aceEditor1.setValue("//Player1\n");
+aceEditor1.setValue("//Player\n");
 aceEditor1.$blockScrolling = Infinity;
 aceEditor2.setFontSize(18);
 aceEditor2.setTheme("ace/theme/chaos");
 aceEditor2.getSession().setMode("ace/mode/javascript");
-aceEditor2.setValue("//Player2\n");
+aceEditor2.setValue("//Computer\n");
 aceEditor2.$blockScrolling = Infinity;
 
 commandInput.setFontSize(18);
@@ -57,10 +59,6 @@ window.addEventListener("keydown", (e)=> {
             player1Ready();
         }
 
-        if (aceEditor2.isFocused()) {
-            player2Ready();
-        }
-
         if (editor.isFocused()) {
             createCharacter();
         }
@@ -78,44 +76,19 @@ function player1Ready() {
     if (gameState === "End") { return; }
     if (keyInput !== true) {
         let player1Code = aceEditor1.getValue();
-        socket.emit('player1', {
-            "player1Code": player1Code
-        });
-    }
-}
-
-function player2Ready() {
-    if (gameState === "End") { return; }
-    if (keyInput !== true) {
-        let player2Code = aceEditor2.getValue();
-        socket.emit('player2', {
-            "player2Code": player2Code
-        });
-    }
-}
-
-socket.on('player1', (code) => {
-    player1.setCode(code.player1Code);
-    player1ReadyButton.disabled = true;
-    player1State = true;
-    if (player2State === true) {
+        player1.setCode(player1Code);
+        player1ReadyButton.disabled = true;
+        player1State = true;
+        let player2Code = computerCodes[Math.floor(Math.random() * computerCodes.length)];
+        player2.setCode(player2Code);
         gameStart();
     }
-});
-
-socket.on('player2', (code) => {
-    player2.setCode(code.player2Code);
-    player2ReadyButton.disabled = true;
-    player2State = true;
-    if (player1State === true) {
-        gameStart();
-    }
-});
+}
 
 function gameStart() {
     if (gameState === "End") { return; }
 
-    if (player1State === true && player2State === true) {
+    if (player1State === true) {
         isRunning = true;
         startTime = Date.now();
         gameState = "Game";
@@ -149,7 +122,6 @@ function gameStart() {
                 aceEditor1.setReadOnly(false);
                 aceEditor2.setReadOnly(false);
                 player1ReadyButton.disabled = false;
-                player2ReadyButton.disabled = false;
             }
         }, gameInterval);
 

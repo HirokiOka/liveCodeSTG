@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/top.css">
+    <title>Top</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <h1>How to Play</h1>
+    <ol>
+        <li>Character Programming Mode</li>
+        <img src="/img/characterProgramming.png" alt="characterProgramming">
+        <ul>
+            <li>操作するキャラクターの設定を行う画面です．コンストラクタのパラメータを記述します．</li>
+            <ul>
+                <li>life：キャラクターの体力．</li>
+                <li>speed：キャラクターの行動の速さ．大きいほどプログラムのループが速く回る．</li>
+                <li>power：キャラクターの攻撃力．</li>
+                <li>confidentiality：キャラクターのハッキング耐性．</li>
+                <li>password：キャラクターのパスワード．</li>
+            </ul>
+        </ul>
+
+        <li>Game Mode</li>
+        <img src="/img/game.png" alt="game">
+        <ul>
+            <li>キャラクターをプログラムで制御して対戦します．エディタにプログラムを記述し，両プレイヤーが「Ready」ボタンを押す(またはCTRL+ENTER)とプログラムが10秒間ループして実行されます．</li>
+            <li>攻撃(shot)を命中させて相手のLifeを先に0にした方が勝ちです．</li>
+        </ul>
+    </ol>
+</body>
+</html>

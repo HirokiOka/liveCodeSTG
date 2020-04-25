@@ -9,7 +9,7 @@ h1 {
 .content {
     color: #FFC038;
     padding: 40px 0px;
-    font-family: 'Courier New', monospace;
+    font-family: 'arial black';
 }
 
 .btn-square {
@@ -78,10 +78,10 @@ h1 {
 }
 
 #editors {
-    top: 97px;
+    top: 129px;
     position: absolute;
     display: flex;
-    opacity: 0.8;
+    opacity: 0.6;
     left: 50%;
     transform: translate(-50%);
     max-width: 100%;

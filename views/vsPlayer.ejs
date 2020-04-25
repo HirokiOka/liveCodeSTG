@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/vsPlayer.css">
+    <title>VS Player</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <div id="character-programming">
+        <div class="content">
+            <h1>Character Programming Mode</h1>
+            <div id="client-id"><%= clientId %></div>
+        </div>
+        <code><pre id="character-editor"></pre></code>
+        <button id="startButton" class="btn-square" onclick="createCharacter()">Start!</button>
+    </div>
+
+    <div id="game">
+        <div class="content">
+            <div id="canvas"></div>
+            <div id="editors">
+                <div id="editor1">
+                    <code><pre id="player1-editor"></pre></code>
+                </div>
+                <div id="editor2">
+                    <code><pre id="player2-editor"></pre></code>
+                </div>
+            </div>
+            <div id="command_line">
+                <code><pre id="command_input"></pre></code>
+                <code><pre id="command_output"></pre></code>
+            </div>
+            <div class="button_wrapper">
+                <button id="player1ReadyButton" class="btn-square"onclick="player1Ready()">Ready</button>
+                <button id="player2ReadyButton" class="btn-square" onclick="player2Ready()">Ready</button><br>
+                <input id="checkbox" type="checkbox">Key Input
+            </div>
+            
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    <script src="../socket.io/socket.io.js"></script>
+    <script src="/js/characterProgramming.js"></script>
+    <script src="/js/hacking.js"></script>
+    <script src="/js/editor.js"></script>
+    <script src="/js/character.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

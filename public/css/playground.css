@@ -1,0 +1,24 @@
+body {
+    background-color: #3A3776;
+    font-family: 'arial black';
+    color: #AADACD;
+}
+
+h1 {
+    text-align: center;
+}
+
+#canvas {
+    text-align: center;
+}
+
+#editor {
+    top: 128px;
+    height: 480px;
+    width: 840px;
+    position: absolute;
+    opacity: 0.6;
+    left: 50%;
+    transform: translate(-50%);
+    max-width: 100%;
+}

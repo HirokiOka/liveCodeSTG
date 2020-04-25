@@ -26,27 +26,12 @@ let explosionSound = null;
 let winSound = null;
 const backgroundColor = "#121259";
 
-
-let ctx;
 let keyInput;
 let retryButton;
-
-function playCollisionSound() {
-    const collisionSound = new Audio();
-    collisionSound.src = "/sound/explosion.mp3";
-    collisionSound.play();
-}
-
-function playWinSound() {
-    const winSound = new Audio();
-    winSound.src = "/sound/clear.mp3";
-    winSound.play();
-}
 
 function setup() {
     let canvas = createCanvas(840, 480, P2D);
     canvas.parent('canvas');
-    ctx = document.getElementById('defaultCanvas0').getContext('2d');
     textFont("arial black");
     gameState = "Programming";
     barHeight = height / 10;
@@ -121,18 +106,12 @@ function drawParameters() {
     text(timer, width/2 - 20, 30);
 }
 
-socket.on('create', (code) => {
-    eval(code.code);
-    if (player1 && player2) {
-        initialize();
-    }
-});
 
 function createCharacter() {
     document.getElementById('startButton').disabled = true;
-    socket.emit('create', {
-        code: editor.getValue()
-    });
+    eval(editor.getValue());
+    player2 = new Fighter2();
+    initialize();
 }
 
 function initialize() {
@@ -171,10 +150,6 @@ function initialize() {
 
 function finalize() {
     gameState = "End";
-    socket.emit('gameEnd', {
-        'gameState': 'End'
-    });
-    playWinSound();
     noLoop();
 }
 
@@ -192,3 +167,15 @@ function keyPressed() {
         location.reload();
     }
 }
+
+class Fighter2 extends BaseFighter2 {
+    constructor() {
+        super();
+        this.life = 100;
+        this.speed = 25;
+        this.power = 25;
+        this.confidentiality = 25;
+        this.password = 'pass';
+    }
+}
+

@@ -1,0 +1,41 @@
+body {
+    background-color: #121259;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+
+h1 {
+    color: #FFC038;
+}
+
+.btn-square {
+    font-size: 32px;
+    width: 400px;
+    height: 100px;
+    display: inline-block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    background: #668ad8;/*ボタン色*/
+    color: #FFF;
+    border-bottom: solid 4px #627295;
+    border-radius: 3px;
+}
+
+#player1-button {
+    background: #1900b3; 
+}
+
+#player2-button {
+    background: #ad1500;
+}
+
+#spectator {
+    background: purple;
+}
+
+.btn-square:active {
+    /*ボタンを押したとき*/
+    -webkit-transform: translateY(4px);
+    transform: translateY(4px);/*下に動く*/
+    border-bottom: none;/*線を消す*/
+}

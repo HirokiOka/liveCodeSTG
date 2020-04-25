@@ -13,23 +13,33 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
+    res.render('top');
+});
+
+app.get('/vs-player', (req, res) => {
     if (client1 === false) {
 
-        res.render('index', { clientId: 1 });
-
+        res.render('vsPlayer', { clientId: 1 });
         client1 = true;
         console.log("client connected and client1 assgined");
 
     } else if (client2 === false) {
 
-        res.render('index', { clientId: 2 });
-
+        res.render('vsPlayer', { clientId: 2 });
         client2 = true;
         console.log("client connected and client2 assgined");
 
     } else {
         res.send("Please wait...");
     }
+});
+
+app.get('/vs-computer', (req, res) => {
+    res.render('vsComputer');
+});
+
+app.get('/playground', (req, res) => {
+    res.render('playground');
 });
 
 io.on('connection', (socket) => {

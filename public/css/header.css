@@ -1,0 +1,12 @@
+header {
+    height: 32px;
+    background-color: black;
+}
+
+a {
+    color: white;
+    text-align: center;
+    margin: 0px 6px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+}
