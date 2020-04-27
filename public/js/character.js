@@ -1,25 +1,7 @@
-class Position {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    set(x, y) {
-        if (x != null) { this.x = x; }
-        if (y != null) { this.y = y; }
-    }
-
-    distance(target) {
-        let x = this.x - target.x;
-        let y = this.y - target.y;
-        return sqrt(x * x + y * y);
-    }
-}
-
 class Character {
     constructor(x, y, w, h, life, imagePath) {
-        this.position = new Position(x, y);
-        this.vector = new Position(0.0, -1.0);
+        this.position = createVector(x, y);
+        this.vector = createVector(0.0, -1.0);
         this.width = w;
         this.height = h;
         this.life = life;
@@ -66,10 +48,6 @@ class Player extends Character {
         this.shotArray = shotArray;
     }
 
-    setChargeShot(chargeShot) {
-        this.chargeShot = chargeShot;
-    }
-
     setCode(code) {
         this.code = code;
     }
@@ -107,7 +85,7 @@ class Player extends Character {
                 }
             }
         }
-    }   
+    }
 
     update() {
         if (this.life <= 0) { return; }
@@ -125,11 +103,41 @@ class BaseFighter1 extends Player {
     }
 }
 
+//x, y, w, h, speed, power, imagePath
 class BaseFighter2 extends Player {
     constructor() {
         super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png');
     }
 }
+
+class TextFighter1 extends Player {
+    constructor() {
+        super(40, height / 2, 64, 64, 20, 20, '/img/player1.png');
+        this.size = 64;
+    }
+
+    draw() {
+        textSize(this.size);
+        textAlign(CENTER, CENTER)
+        text(this.appearance, this.position.x, this.position.y);
+        textAlign(LEFT, BOTTOM);
+    }
+}
+
+class TextFighter2 extends Player {
+    constructor() {
+        super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png');
+        this.size = 64;
+    }
+
+    draw() {
+        textSize(this.size);
+        textAlign(CENTER, CENTER)
+        text(this.appearance, this.position.x, this.position.y);
+        textAlign(LEFT, BOTTOM);
+    }
+}
+
 
 class Shot extends Character {
     constructor(x, y, w, h, imagePath) {
@@ -161,7 +169,7 @@ class Shot extends Character {
         this.position.x += this.vector.x * this.speed;
         this.position.y += this.vector.y * this.speed;
 
-        let dist = this.position.distance(this.target.position);
+        let dist = this.position.dist(this.target.position);
         
         if (this.target.life > 0 && dist <= (this.width + this.target.width) / 4) {
             
@@ -186,7 +194,7 @@ class BackgroundStar {
     }
 
     set(x, y) {
-        this.position = new Position(x, y);
+        this.position = createVector(x, y);
     }
 
     update() {

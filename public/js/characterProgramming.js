@@ -9,14 +9,13 @@ let clientId = document.getElementById('client-id').textContent;
 const player1Color = "#1900b3";
 const player2Color = "#ad1500";
 
-let defaultCode = `
-class Fighter${clientId} extends BaseFighter${clientId} {
+let defaultCode = `class Fighter${clientId} extends TextFighter${clientId} {
     constructor() {
         super();
+        this.appearance = "🚀";
         this.life = 100;
         this.speed = 25;
         this.power = 25;
-        this.confidentiality = 25;
         this.password = 'pass';
     }
 }

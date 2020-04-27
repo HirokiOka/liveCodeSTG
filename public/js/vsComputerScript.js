@@ -168,13 +168,13 @@ function keyPressed() {
     }
 }
 
-class Fighter2 extends BaseFighter2 {
+class Fighter2 extends TextFighter2 {
     constructor() {
         super();
+        this.appearance = "🐉";
         this.life = 100;
         this.speed = 25;
         this.power = 25;
-        this.confidentiality = 25;
         this.password = 'pass';
     }
 }
