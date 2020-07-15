@@ -64,8 +64,8 @@ function draw() {
             finalize();
         } else if (player2.life == 0) {
             textSize(64);
-            fill(player1Color);
-            text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
+            fill('blue');
+            text('Player1 Win!\nPress R to Retry', width / 2 - 200 , height /2);
             finalize();
         }
         
@@ -105,7 +105,6 @@ function drawParameters() {
     fill(255);
     text(timer, width/2 - 20, 30);
 }
-
 
 function createCharacter() {
     document.getElementById('startButton').disabled = true;
@@ -154,6 +153,7 @@ function finalize() {
 }
 
 function keyPressed() {
+
     if (keyInput === true && gameState === "Game") {
         if (keyCode === UP_ARROW) {
             player1.moveUp();
@@ -168,11 +168,15 @@ function keyPressed() {
     }
 }
 
+window.addEventListener("beforeunload", (e) => {
+    e.returnValue = "ページを離れます．よろしいですか？"
+});
+
 class Fighter2 extends TextFighter2 {
     constructor() {
         super();
         this.appearance = "🐉";
-        this.life = 100;
+        this.life = 200;
         this.speed = 25;
         this.power = 25;
         this.password = 'pass';

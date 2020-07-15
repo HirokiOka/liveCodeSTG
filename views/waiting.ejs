@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Waiting</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <div class="content">
+        <h1>Looking for an opponent...</h1>
+        <div id="client-id" style="display: none;"><%= clientId %></div>
+    </div>
+    <script src="../socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        let ss = sessionStorage;
+        let clientId = document.getElementById('client-id').textContent;
+        ss.setItem('id', clientId);
+
+        //socketioの処理
+        socket.on('match',msg =>  {
+            
+            msg.users.forEach((u, i) => {
+                if (parseInt(ss.id, 10) === parseInt(u, 10)) {
+                    ss.setItem('roomId', msg.roomId);
+                    window.location.href = '/vs-player';
+                    return;
+                }
+            });
+        });
+
+        window.onbeforeunload = () => {
+            socket.emit('waitingUserDisconnected', { clientId });
+        };
+    </script>
+</body>
+</html>

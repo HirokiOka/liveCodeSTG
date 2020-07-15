@@ -21,38 +21,52 @@ player2.shot();`;
 let isCommandPressed =false;
 let isReturnPressed = false;
 
-aceEditor1.setFontSize(18);
-aceEditor1.setTheme("ace/theme/chaos");
-aceEditor1.getSession().setMode("ace/mode/javascript");
+let ss = sessionStorage;
+
 aceEditor1.setValue("//Player1\n");
+aceEditor1.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript"
+});
 aceEditor1.$blockScrolling = Infinity;
-aceEditor2.setFontSize(18);
-aceEditor2.setTheme("ace/theme/chaos");
-aceEditor2.getSession().setMode("ace/mode/javascript");
+
+aceEditor2.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript"
+});
 aceEditor2.setValue("//Player2\n");
 aceEditor2.$blockScrolling = Infinity;
 
-commandInput.setFontSize(18);
-commandInput.setTheme("ace/theme/chaos");
-commandInput.getSession().setMode("ace/mode/javascript");
-commandInput.renderer.setOption("showLineNumbers", false);
-commandInput.renderer.setOption("showGutter", false);
+commandInput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false
+});
 commandInput.$blockScrolling = Infinity;
 
-commandOutput.setFontSize(18);
-commandOutput.setTheme("ace/theme/chaos");
-commandOutput.getSession().setMode("ace/mode/javascript");
-commandOutput.renderer.setOption("showLineNumbers", false);
-commandOutput.renderer.setOption("showGutter", false);
-commandOutput.setReadOnly(true);
+commandOutput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false,
+    readOnly: true
+});
 commandOutput.$blockScrolling = Infinity;
 
 
 window.addEventListener("keydown", (e)=> {
+    if (gameState === "Game") {
+        e.preventDefault();
+        return;
+    }
     if (gameState !== "Programming") { return; }
 
     if (e.keyCode === 13 && e.ctrlKey) {
-
         if (aceEditor1.isFocused()) {
             player1Ready();
         }
@@ -64,7 +78,6 @@ window.addEventListener("keydown", (e)=> {
         if (editor.isFocused()) {
             createCharacter();
         }
-
     }
 
     if (e.keyCode === 13 && commandInput.isFocused()) {
@@ -74,12 +87,15 @@ window.addEventListener("keydown", (e)=> {
     
 });
 
+
+//記述したコードをサーバへ送信
 function player1Ready() {
     if (gameState === "End") { return; }
     if (keyInput !== true) {
         let player1Code = aceEditor1.getValue();
         socket.emit('player1', {
-            "player1Code": player1Code
+            'player1Code': player1Code,
+            'roomId': ss.roomId
         });
     }
 }
@@ -89,32 +105,31 @@ function player2Ready() {
     if (keyInput !== true) {
         let player2Code = aceEditor2.getValue();
         socket.emit('player2', {
-            "player2Code": player2Code
+            'player2Code': player2Code,
+            'roomId': ss.roomId
         });
     }
 }
 
-socket.on('player1', (code) => {
-    player1.setCode(code.player1Code);
+//サーバから送られてきたコードをエディタにセット
+socket.on('player1', msg => {
+    player1.setCode(msg.player1Code);
     player1ReadyButton.disabled = true;
     player1State = true;
-    if (player2State === true) {
-        gameStart();
-    }
+    gameStart();
 });
 
-socket.on('player2', (code) => {
-    player2.setCode(code.player2Code);
+socket.on('player2', msg => {
+    player2.setCode(msg.player2Code);
     player2ReadyButton.disabled = true;
     player2State = true;
-    if (player1State === true) {
-        gameStart();
-    }
+    gameStart();
 });
 
+//エディタにセットされているコードをループしてevalする
 function gameStart() {
+    if (!player1State && !player2State) { return; }
     if (gameState === "End") { return; }
-
     if (player1State === true && player2State === true) {
         isRunning = true;
         startTime = Date.now();

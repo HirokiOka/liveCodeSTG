@@ -50,6 +50,11 @@ function setup() {
     textFont("arial black");
     gameState = "Programming";
     barHeight = height / 10;
+    if (playerNum == 1) {
+        aceEditor2.setOption("readOnly", true);
+    } else if (playerNum == 2) {
+        aceEditor1.setOption("readOnly", true);
+    }
 }
 
 function draw() {
@@ -121,8 +126,8 @@ function drawParameters() {
     text(timer, width/2 - 20, 30);
 }
 
-socket.on('create', (code) => {
-    eval(code.code);
+socket.on('create', msg => {
+    eval(msg.code);
     if (player1 && player2) {
         initialize();
     }
@@ -131,7 +136,8 @@ socket.on('create', (code) => {
 function createCharacter() {
     document.getElementById('startButton').disabled = true;
     socket.emit('create', {
-        code: editor.getValue()
+        'code': editor.getValue(),
+        'roomId': ss.roomId
     });
 }
 
@@ -172,11 +178,15 @@ function initialize() {
 function finalize() {
     gameState = "End";
     socket.emit('gameEnd', {
-        'gameState': 'End'
+        'roomId': roomId
     });
-    playWinSound();
+    // playWinSound();
     noLoop();
 }
+
+window.addEventListener("beforeunload", (e) => {
+    e.returnValue = "ページを離れます．よろしいですか？"
+});
 
 function keyPressed() {
     if (keyInput === true && gameState === "Game") {

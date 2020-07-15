@@ -12,7 +12,7 @@
     <div id="character-programming">
         <div class="content">
             <h1>Character Programming Mode</h1>
-            <div id="client-id"><%= clientId %></div>
+            <div id="player-num"><%= playerNum %></div>
         </div>
         <code><pre id="character-editor"></pre></code>
         <button id="startButton" class="btn-square" onclick="createCharacter()">Start!</button>
@@ -51,5 +51,15 @@
     <script src="/js/editor.js"></script>
     <script src="/js/character.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+        socket.on('disconnected', msg => {
+            alert('player disconnected');
+        });
+        window.onbeforeunload = () => {
+            socket.emit('playerDisconnected', { 
+                'roomId': ss.roomId
+            });
+        };
+    </script>
 </body>
 </html>

@@ -17,42 +17,58 @@ let computerCodes = [
     "player2.randomMove();\nplayer2.shot();",
     "player2.shot();",
     "player2.moveTo(player1.position.y);\nplayer2.shot();"
-
 ];
 
 let isCommandPressed =false;
 let isReturnPressed = false;
 
-aceEditor1.setFontSize(18);
-aceEditor1.setTheme("ace/theme/chaos");
-aceEditor1.getSession().setMode("ace/mode/javascript");
 aceEditor1.setValue("//Player\n");
 aceEditor1.$blockScrolling = Infinity;
-aceEditor2.setFontSize(18);
-aceEditor2.setTheme("ace/theme/chaos");
-aceEditor2.getSession().setMode("ace/mode/javascript");
+aceEditor1.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript"
+});
+aceEditor1.resize();
+
+// aceEditor1.renderer.setOption({"maxLines": 15});
+
+aceEditor2.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    readOnly: true
+});
 aceEditor2.setValue("//Computer\n");
 aceEditor2.$blockScrolling = Infinity;
 
-commandInput.setFontSize(18);
-commandInput.setTheme("ace/theme/chaos");
-commandInput.getSession().setMode("ace/mode/javascript");
-commandInput.renderer.setOption("showLineNumbers", false);
-commandInput.renderer.setOption("showGutter", false);
+commandInput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false
+});
 commandInput.$blockScrolling = Infinity;
 
-commandOutput.setFontSize(18);
-commandOutput.setTheme("ace/theme/chaos");
-commandOutput.getSession().setMode("ace/mode/javascript");
-commandOutput.renderer.setOption("showLineNumbers", false);
-commandOutput.renderer.setOption("showGutter", false);
-commandOutput.setReadOnly(true);
+
+commandOutput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false,
+    readOnly: true
+});
 commandOutput.$blockScrolling = Infinity;
 
 
 window.addEventListener("keydown", (e)=> {
+    if (gameState === "Game") {
+        e.preventDefault();
+        return;
+    }
     if (gameState !== "Programming") { return; }
-
     if (e.keyCode === 13 && e.ctrlKey) {
 
         if (aceEditor1.isFocused()) {
@@ -74,7 +90,7 @@ window.addEventListener("keydown", (e)=> {
 
 function player1Ready() {
     if (gameState === "End") { return; }
-    if (keyInput !== true) {
+    // if (keyInput !== true) {
         let player1Code = aceEditor1.getValue();
         player1.setCode(player1Code);
         player1ReadyButton.disabled = true;
@@ -82,7 +98,7 @@ function player1Ready() {
         let player2Code = computerCodes[Math.floor(Math.random() * computerCodes.length)];
         player2.setCode(player2Code);
         gameStart();
-    }
+    // }
 }
 
 function gameStart() {
