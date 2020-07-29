@@ -13,6 +13,14 @@
         <div class="content">
             <h1>Character Programming Mode</h1>
         </div>
+        <p>
+            <form id="target" style="color: white;">
+                <input type="radio" name="type" value="attack">attack
+                <input type="radio" name="type" value="speed">speed
+                <input type="radio" name="type" value="tank">tank
+                <input type="radio" name="type" value="custom" checked>custom
+            </form>
+        </p>
         <code><pre id="character-editor"></pre></code>
         <button id="startButton" class="btn-square" onclick="createCharacter()">Start!</button>
     </div>

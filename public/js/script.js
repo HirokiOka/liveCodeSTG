@@ -62,7 +62,8 @@ function draw() {
         background(backgroundColor);
         backgroundStarArray.map((v) => {
             v.update();
-        });
+        }); 
+        
 
         player1.update();
         player2.update();
@@ -72,6 +73,14 @@ function draw() {
         player2ShotArray.map((v) => {
             v.update();
         });
+
+        if (player1State === true && player2State !== true) {
+            text('Player1 Ready', 120, height/2);
+        }
+        if (player2State === true && player1State !== true) {
+            text('player2 Ready', 120+width/2, height/2);
+        }
+
         if (player1.life === 0 && player2.life === 0) {
             textSize(64);
             fill(255);

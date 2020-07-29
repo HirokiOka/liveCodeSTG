@@ -11,6 +11,7 @@ let player1 = false;
 let player2 = false;
 let clientId = 0;
 let roomId = 0;
+let activeRooms = [];
 let count = 0;
 let waitingUsers = [];
 
@@ -46,6 +47,8 @@ function matching() {
                     'users': selectedUsers,
                     'roomId': roomId
                 });
+                activeRooms.push(roomId);
+                console.log(`active rooms: ${activeRooms}`);
                 socket.join(roomId);
             });
             roomId++;
@@ -53,27 +56,6 @@ function matching() {
             console.log(`User ${selectedUsers} matched!`);
         }
     }
-}
-
-//2人の待ちユーザをマッチング
-function matchTwoUsers() {
-    let selectedUsers = [];
-    selectedUsers.push(waitingUsers[0]);
-    selectedUsers.push(waitingUsers[1]);
-    waitingUsers.shift();
-    waitingUsers.shift();
-    //socketioの処理
-    io.on('connection', socket => {
-        count++;
-        socket.broadcast.emit('match', {
-            'users': selectedUsers,
-            'roomId': roomId
-        });
-        socket.join(roomId);
-        if (count % 2 === 0){ roomId++; }
-    });
-    console.log(`User ${selectedUsers} matched!`);
-    
 }
 
 app.get('/vs-player', (req, res) => {

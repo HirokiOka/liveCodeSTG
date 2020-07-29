@@ -36,6 +36,7 @@ class Player extends Character {
         super(x, y, w, h, 0, imagePath);
         this.speed = speed;
         this.power = power;
+        this.direction = 'top';
         this.shotCheckCounter = 0;
         this.shotInterval = 10;
         this.shotArray = null;
@@ -52,16 +53,24 @@ class Player extends Character {
         this.code = code;
     }
 
-    moveTo(y) {
-        this.position.y = y;
+    moveTo(target) {
+        if (target === 'top') {
+            this.position.y = 48;
+        }else if (target === 'center') {
+            this.position.y = 240;
+        } else if (target === 'bottom') {
+            this.position.y = 432;
+        }
     }
 
     moveUp () {
         this.position.y -= this.speed;
+        this.direction = 'top';
     }
 
     moveDown () {
         this.position.y += this.speed;
+        this.direction = 'bottom';
     }
 
     randomMove() {
@@ -86,6 +95,30 @@ class Player extends Character {
             }
         }
     }
+
+    //攻撃テンプレートメソッド
+
+    randomAttack() {
+        this.randomMove();
+        this.shot();
+    }
+
+    upDownAttack() {
+        if (this.direction === 'top') {
+            this.moveUp();
+        } else if (this.direction === 'bottom') {
+            this.moveDown();
+        }
+        
+        if (this.position.y <= 48) {
+            this.direction = 'bottom';
+        } else if (this.position.y >= 432) {
+            this.direction = 'top';
+        }
+        this.shot();
+    }
+
+
 
     update() {
         if (this.life <= 0) { return; }

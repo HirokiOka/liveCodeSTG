@@ -16,7 +16,7 @@ let player1ReadyButton = document.getElementById("player1ReadyButton");
 let computerCodes = [
     "player2.randomMove();\nplayer2.shot();",
     "player2.shot();",
-    "player2.moveTo(player1.position.y);\nplayer2.shot();"
+    "player2.upDownAttack();"
 ];
 
 let isCommandPressed =false;
