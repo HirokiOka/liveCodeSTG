@@ -137,6 +137,7 @@ function drawParameters() {
 
 socket.on('create', msg => {
     eval(msg.code);
+    console.log('created!');
     if (player1 && player2) {
         initialize();
     }

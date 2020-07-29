@@ -10,10 +10,11 @@ const port = process.env.PORT || 3000;
 let player1 = false;
 let player2 = false;
 let clientId = 0;
-let roomId = 0;
+let roomId = 1;
 let activeRooms = [];
 let count = 0;
 let waitingUsers = [];
+let matchCount = 0;
 
 app.set('ejs', ejs.renderFile);
 app.set('view engine', 'ejs');
@@ -42,14 +43,24 @@ function matching() {
             waitingUsers.shift();
             waitingUsers.shift();
 
+            /*
+            ここの処理のなんとかする
+            ひとつのroomに2人のプレイヤを割り当てる
+            */
             io.on('connection', socket => {
                 socket.broadcast.emit('match', {
                     'users': selectedUsers,
                     'roomId': roomId
                 });
-                activeRooms.push(roomId);
-                console.log(`active rooms: ${activeRooms}`);
+                matchCount++;
                 socket.join(roomId);
+                if (matchCount % 2 === 0) {
+                    let index = activeRooms.indexOf(parseInt(roomId, 10));
+                    if (index === -1) {
+                        activeRooms.push(roomId);
+                    }
+                    console.log(`active rooms: ${activeRooms}`);
+                }
             });
             roomId++;
 
@@ -62,11 +73,11 @@ app.get('/vs-player', (req, res) => {
     if (player1 === false) {
         res.render('vsPlayer', { playerNum: 1 });
         player1 = true;
-        console.log("player1 joined");
+        // console.log("player1 joined");
     } else if (player2 === false) {
         res.render('vsPlayer', { playerNum: 2 });
         player2 = true;
-        console.log("player2 joined");
+        // console.log("player2 joined");
     }
 
     if (player1 === true && player2 === true) {
@@ -83,10 +94,14 @@ app.get('/playground', (req, res) => {
     res.render('playground');
 });
 
+app.get('/observer', (req, res) => {
+    res.render('observer', { activeRooms });
+});
+
 //socketioの処理
 io.on('connection', socket => {
 
-    //クライアントからコードが送られてきたらクライアントへ送り返す
+    //プレイヤーから送られてきた戦略のコードを同じroomのプレイヤーに送る
     socket.on('player1', msg => {
         io.to(msg.roomId).emit('player1', {
             "player1Code": msg.player1Code,
@@ -105,12 +120,12 @@ io.on('connection', socket => {
         });
     });
 
+    //ゲームが終了した時の処理
     socket.on('gameEnd', msg => {
         console.log(`${msg.roomId} Game End`);
-        // clientNum = 0;
     });
 
-    //クライアントの接続が切れた時の処理
+    //クライアント(待ちユーザ)の接続が切れた時の処理
     socket.on('waitingUserDisconnected', msg => {
         waitingUsers.forEach((u, i) => {
             if(parseInt(msg.clientId, 10) === parseInt(u, 10)) {
@@ -118,17 +133,20 @@ io.on('connection', socket => {
             }
         });
         console.log(`client ${msg.clientId} disconnected`);
-        console.log(`waitingUsers: ${waitingUsers}`);
+        // console.log(`waitingUsers: ${waitingUsers}`);
     });
 
-
-    // socket.on('playerDisconnected', (player) => {
-    //     console.log(`player ${player.playerNum} disconnected`);
-    // });
+    //プレイヤーの接続が切れた時の処理
     socket.on('playerDisconnected', msg => {
         socket.to(msg.roomId).emit('disconnected', {
             'info': 'disconnected'
         });
+        //activeRoomsから指定の要素を削除する
+        let index = activeRooms.indexOf(parseInt(msg.roomId, 10));
+        if (index > -1) {
+            activeRooms.splice(index, 1);
+        }
+        console.log(`active rooms: ${activeRooms}`);
     });
 });
 
