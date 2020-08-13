@@ -23,7 +23,11 @@ let isReturnPressed = false;
 
 let ss = sessionStorage;
 
-aceEditor1.setValue("//Player1\n");
+aceEditor1.setValue(`//Player1
+
+function player1Loop() {
+
+}`);
 aceEditor1.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
@@ -36,7 +40,11 @@ aceEditor2.setOptions({
     theme: "ace/theme/chaos",
     mode: "ace/mode/javascript"
 });
-aceEditor2.setValue("//Player2\n");
+aceEditor2.setValue(`//Player2
+
+function player2Loop() {
+
+}`);
 aceEditor2.$blockScrolling = Infinity;
 
 commandInput.setOptions({
@@ -139,12 +147,14 @@ function gameStart() {
         aceEditor2.setValue(player2.code);
         
         try {
+            eval(player1.code);
             player1Action = setInterval(() => {
-                eval(player1.code);
+                player1Loop();
             }, (100 - player1.speed) * 10);
-    
+            
+            eval(player2.code);
             player2Action = setInterval(() => {
-                eval(player2.code);
+                player2Loop();
             }, (100 - player2.speed) * 10);
         } catch(e) {
             console.log(e);

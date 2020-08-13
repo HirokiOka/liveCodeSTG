@@ -75,9 +75,11 @@ function draw() {
         });
 
         if (player1State === true && player2State !== true) {
+            textSize(24);
             text('Player1 Ready', 120, height/2);
         }
         if (player2State === true && player1State !== true) {
+            textSize(24);
             text('player2 Ready', 120+width/2, height/2);
         }
 
@@ -188,7 +190,7 @@ function initialize() {
 function finalize() {
     gameState = "End";
     socket.emit('gameEnd', {
-        'roomId': roomId
+        'roomId': ss.roomId
     });
     // playWinSound();
     noLoop();

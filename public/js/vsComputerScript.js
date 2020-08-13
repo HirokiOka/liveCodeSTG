@@ -120,6 +120,11 @@ function initialize() {
 
     player1.setVectorFromAngle(HALF_PI);
     player2.setVectorFromAngle(-HALF_PI);
+    //computerのコードを開始時にセット
+    player2.setCode(computerCodes[Math.floor(Math.random() * computerCodes.length)]);
+    //targetをセット
+    player1.setTarget(player2);
+    player2.setTarget(player1);
 
     for (let i = 0; i < SHOT_MAX_COUNT; i++) {
         player1ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);

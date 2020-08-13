@@ -45,6 +45,10 @@ class Player extends Character {
         this.code = null;
     }
 
+    setTarget(target) {
+        this.target = target;
+    }
+
     setShotArray(shotArray) {
         this.shotArray = shotArray;
     }
@@ -81,6 +85,23 @@ class Player extends Character {
         } else {
             this.moveDown();
         }
+    }
+
+    enemySearch() {
+        if (this.position.y === this.target.position.y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    isDanger() {
+        this.target.shotArray.forEach((e) => {
+            if (e.position.y === this.position.y) {
+                return true;
+            }
+        });
+        return false;
     }
 
     shot() {
@@ -159,7 +180,7 @@ class TextFighter1 extends Player {
 
 class TextFighter2 extends Player {
     constructor() {
-        super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png');
+        super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png', player1);
         this.size = 64;
     }
 
@@ -216,6 +237,14 @@ class Shot extends Character {
         }
         this.draw();
     }
+
+    isCaptured() {
+        if (this.position.y === this.target.position) {
+            return true;
+        }
+    }
+
+
 }
 
 class BackgroundStar {

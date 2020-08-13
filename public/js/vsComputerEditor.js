@@ -7,22 +7,39 @@ let commandOutput = ace.edit("command_output");
 let player1Action = null;
 let player2Action = null;
 let player1State = false;
-let player2State = false;
 let editor1 = document.getElementById("editor1");
 let editor2 = document.getElementById("editor2");
 let editors = document.getElementById("editors");
 let player1ReadyButton = document.getElementById("player1ReadyButton");
 
 let computerCodes = [
-    "player2.randomMove();\nplayer2.shot();",
-    "player2.shot();",
-    "player2.upDownAttack();"
+    `//Computer
+
+function player2Loop() {
+    player2.randomMove();
+    player2.shot();
+}`,
+    `//Computer
+
+function player2Loop() {
+    player2.shot();
+}`,
+    `//Computer
+
+function player2Loop() {
+    player2.upDownAttack();
+}`
 ];
 
 let isCommandPressed =false;
 let isReturnPressed = false;
 
-aceEditor1.setValue("//Player\n");
+aceEditor1.setValue(`//Player
+
+function player1Loop() {
+
+}
+`);
 aceEditor1.$blockScrolling = Infinity;
 aceEditor1.setOptions({
     fontSize: 18,
@@ -31,7 +48,7 @@ aceEditor1.setOptions({
 });
 aceEditor1.resize();
 
-// aceEditor1.renderer.setOption({"maxLines": 15});
+aceEditor1.renderer.setOption({"maxLines": 15});
 
 aceEditor2.setOptions({
     fontSize: 18,
@@ -39,8 +56,13 @@ aceEditor2.setOptions({
     mode: "ace/mode/javascript",
     readOnly: true
 });
-aceEditor2.setValue("//Computer\n");
+aceEditor2.setValue(`//Computer
+
+function player2Loop() {
+
+}`);
 aceEditor2.$blockScrolling = Infinity;
+
 
 commandInput.setOptions({
     fontSize: 18,
@@ -95,8 +117,6 @@ function player1Ready() {
         player1.setCode(player1Code);
         player1ReadyButton.disabled = true;
         player1State = true;
-        let player2Code = computerCodes[Math.floor(Math.random() * computerCodes.length)];
-        player2.setCode(player2Code);
         gameStart();
     // }
 }
@@ -113,12 +133,14 @@ function gameStart() {
         aceEditor2.setValue(player2.code);
         
         try {
+            eval(player1.code);
             player1Action = setInterval(() => {
-                eval(player1.code);
+                player1Loop();
             }, (100 - player1.speed) * 10);
-    
+            
+            eval(player2.code);
             player2Action = setInterval(() => {
-                eval(player2.code);
+                player2Loop();
             }, (100 - player2.speed) * 10);
         } catch(e) {
             console.log(e);
@@ -133,10 +155,10 @@ function gameStart() {
                 round++;
                 gameState = "Programming";
                 player1State = false;
-                player2State = false;
                 editors.style.opacity = 0.6;
                 aceEditor1.setReadOnly(false);
                 aceEditor2.setReadOnly(false);
+                player2.setCode(computerCodes[Math.floor(Math.random() * computerCodes.length)]);
                 player1ReadyButton.disabled = false;
             }
         }, gameInterval);
