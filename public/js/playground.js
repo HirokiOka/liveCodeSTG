@@ -20,6 +20,8 @@ function setup() {
     }
     player.setShotArray(shotArray);
     barHeight = height / 10;
+    textSize(32);
+    fill(255);
 }
 
 function draw() {
@@ -28,6 +30,10 @@ function draw() {
     shotArray.map((v) => {
         v.update();
     });
+    if (isRunning) {
+        timer = 10 - Math.floor((Date.now() - startTime) / 1000);
+    }
+    text(timer, width/2 - 20, 30);
 }
 
 class Fighter extends BaseFighter1 {
