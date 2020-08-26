@@ -11,7 +11,9 @@
     <%- include('../partials/header') %>
     <h1>Playground</h1>
     <div id="canvas"></div>
-    <div id="editor"></div>
+    <div id="player-editor" ></div>
+    <button id="run-button" @click="onClick">Run!</button>
+    <h2>Methods</h2>
     <ul>
         <li>player.moveUp() ：プレイヤを上に移動</li>
         <li>player.moveTo(position) ：プレイヤを指定した場所(bottom，center，top)へ移動</li>
@@ -22,45 +24,11 @@
         <li>player.upDownAttack() ：プレイヤがtop->bottom->tom->...と動いて攻撃</li>
     </ul>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
-    <script src="/js/character.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <script>
-        const gameInterval = 10000;
-        let isRunning = false;
-        let timer = 10;
-        let startTime = 0;
-
-        const editor = ace.edit("editor");
-        editor.setFontSize(18);
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/javascript");
-        editor.setValue(`//Player \nfunction playerLoop() {\n\n}`);
-
-        let playerAction = null;
-
-        window.addEventListener("keydown", (e) => {
-            if (e.keyCode === 13 && e.ctrlKey) {
-                if (isRunning) { return; }
-                
-                try {
-                    startTime = Date.now();
-                    isRunning = true;
-                    eval(editor.getValue());
-                    playerAction = setInterval(() => {
-                        playerLoop();
-                    }, (100 - player.speed) * 10);
-                } catch (e) {
-                    console.log(e);
-                }
-
-                setTimeout(() => {
-                    clearInterval(playerAction);
-                    isRunning = false;
-                    timer = 10;
-                }, gameInterval);
-            }
-        });
-    </script>
-    <script src="/js/playground.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="/js/utils/character.js"></script>
+    <script src="/js/render.js"></script>
+    <script src="/js/playgroundScript.js"></script>
 </body>
 </html>

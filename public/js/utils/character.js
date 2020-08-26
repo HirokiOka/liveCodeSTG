@@ -116,9 +116,7 @@ class Player extends Character {
             }
         }
     }
-
     //攻撃テンプレートメソッド
-
     randomAttack() {
         this.randomMove();
         this.shot();
@@ -138,8 +136,6 @@ class Player extends Character {
         }
         this.shot();
     }
-
-
 
     update() {
         if (this.life <= 0) { return; }
@@ -189,6 +185,28 @@ class TextFighter2 extends Player {
         textAlign(CENTER, CENTER)
         text(this.appearance, this.position.x, this.position.y);
         textAlign(LEFT, BOTTOM);
+    }
+}
+
+class Fighter extends BaseFighter1 {
+    constructor() {
+        super();
+        this.life = 100;
+        this.speed = 25;
+        this.power = 25;
+        this.confidentiality = 25;
+        this.password = 'pass';
+    }
+}
+
+class Fighter2 extends TextFighter2 {
+    constructor() {
+        super();
+        this.appearance = "🐉";
+        this.life = 200;
+        this.speed = 25;
+        this.power = 25;
+        this.password = 'pass';
     }
 }
 

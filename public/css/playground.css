@@ -12,7 +12,7 @@ h1 {
     text-align: center;
 }
 
-#editor {
+#player-editor {
     top: 128px;
     height: 480px;
     width: 840px;
@@ -21,4 +21,8 @@ h1 {
     left: 50%;
     transform: translate(-50%);
     max-width: 100%;
+}
+
+#run-button {
+    text-align: center;
 }

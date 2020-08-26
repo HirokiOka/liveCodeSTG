@@ -6,9 +6,7 @@ editor.getSession().setMode("ace/mode/javascript");
 editor.$blockScrolling = Infinity;
 
 let playerNum = document.getElementById('player-num').textContent;
-// const player1Color = "#1900b3";
 const player1Color = "#121259";
-// const player2Color = "#ad1500";
 const player2Color = "#70261A";
 
 let defaultCode = `class Fighter${playerNum} extends TextFighter${playerNum} {
@@ -85,4 +83,71 @@ radio.addEventListener('click', () => {
 }, false);
 
 editor.setValue(defaultCode);
+
+const gameInterval = 10000;
+
+let aceEditor1 = ace.edit("player1-editor");
+let aceEditor2 = ace.edit("player2-editor");
+let commandInput = ace.edit("command_input");
+let commandOutput = ace.edit("command_output");
+let player1State = false;
+let player2State = false;
+let editor1 = document.getElementById("editor1");
+let editor2 = document.getElementById("editor2");
+let editors = document.getElementById("editors");
+
+
+let enemyCode = `//Player2
+player2.randomMove();
+player2.shot();`;
+let isCommandPressed =false;
+let isReturnPressed = false;
+
+let ss = sessionStorage;
+
+aceEditor1.setValue(`//Player1
+
+function player1Loop() {
+
+}`);
+aceEditor1.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript"
+});
+aceEditor1.$blockScrolling = Infinity;
+
+aceEditor2.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript"
+});
+aceEditor2.setValue(`//Player2
+
+function player2Loop() {
+
+}`);
+aceEditor2.$blockScrolling = Infinity;
+
+commandInput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false
+});
+commandInput.$blockScrolling = Infinity;
+
+commandOutput.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false,
+    readOnly: true
+});
+commandOutput.$blockScrolling = Infinity;
+
+
+
 

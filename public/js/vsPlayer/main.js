@@ -1,71 +1,18 @@
-// const socket = io();
-const gameInterval = 10000;
-
-let aceEditor1 = ace.edit("player1-editor");
-let aceEditor2 = ace.edit("player2-editor");
-let commandInput = ace.edit("command_input");
-let commandOutput = ace.edit("command_output");
-let player1Action = null;
-let player2Action = null;
-let player1State = false;
-let player2State = false;
-let editor1 = document.getElementById("editor1");
-let editor2 = document.getElementById("editor2");
-let editors = document.getElementById("editors");
-let player1ReadyButton = document.getElementById("player1ReadyButton");
-let player2ReadyButton = document.getElementById("player2ReadyButton");;
-
-let enemyCode = `//Player2
-player2.randomMove();
-player2.shot();`;
-let isCommandPressed =false;
-let isReturnPressed = false;
-
-let ss = sessionStorage;
-
-aceEditor1.setValue(`//Player1
-
-function player1Loop() {
-
-}`);
-aceEditor1.setOptions({
-    fontSize: 18,
-    theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript"
+let startButton = new Vue({
+    el: "#start",
+    data: {
+        isDisabled: false
+    },
+    methods: {
+        onClick: function() {
+            this.isDisabled = true;
+            socket.emit('create', {
+                'code': editor.getValue(),
+                'roomId': ss.roomId
+            });
+        }
+    }
 });
-aceEditor1.$blockScrolling = Infinity;
-
-aceEditor2.setOptions({
-    fontSize: 18,
-    theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript"
-});
-aceEditor2.setValue(`//Player2
-
-function player2Loop() {
-
-}`);
-aceEditor2.$blockScrolling = Infinity;
-
-commandInput.setOptions({
-    fontSize: 18,
-    theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript",
-    showLineNumbers: false,
-    showGutter: false
-});
-commandInput.$blockScrolling = Infinity;
-
-commandOutput.setOptions({
-    fontSize: 18,
-    theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript",
-    showLineNumbers: false,
-    showGutter: false,
-    readOnly: true
-});
-commandOutput.$blockScrolling = Infinity;
-
 
 window.addEventListener("keydown", (e)=> {
     if (gameState === "Game") {
@@ -95,28 +42,38 @@ window.addEventListener("keydown", (e)=> {
     
 });
 
+let player1ReadyButton = new Vue({
+    el: "#player1-ready",
+    methods: {
+        onClick: function() {
+            player1Ready();
+        }
+    }
+});
 
-//記述したコードをサーバへ送信
+let player2ReadyButton = new Vue({
+    el: "#player2-ready",
+    methods: {
+        onClick: function() {
+            player2Ready();
+        }
+    }
+});
+
 function player1Ready() {
     if (gameState === "End") { return; }
-    if (keyInput !== true) {
-        let player1Code = aceEditor1.getValue();
-        socket.emit('player1', {
-            'player1Code': player1Code,
-            'roomId': ss.roomId
-        });
-    }
+    socket.emit('player1', {
+        'player1Code': aceEditor1.getValue(),
+        'roomId': ss.roomId
+    });
 }
 
 function player2Ready() {
     if (gameState === "End") { return; }
-    if (keyInput !== true) {
-        let player2Code = aceEditor2.getValue();
-        socket.emit('player2', {
-            'player2Code': player2Code,
-            'roomId': ss.roomId
-        });
-    }
+    socket.emit('player2', {
+        'player2Code': aceEditor2.getValue(),
+        'roomId': ss.roomId
+    });
 }
 
 //サーバから送られてきたコードをエディタにセット
@@ -139,6 +96,8 @@ function gameStart() {
     if (!player1State && !player2State) { return; }
     if (gameState === "End") { return; }
     if (player1State === true && player2State === true) {
+        let player1Action = null;
+        let player2Action = null;
         isRunning = true;
         startTime = Date.now();
         gameState = "Game";
@@ -177,8 +136,61 @@ function gameStart() {
                 player2ReadyButton.disabled = false;
             }
         }, gameInterval);
-
     }
 }
 
+window.addEventListener("beforeunload", (e) => {
+    e.returnValue = "ページを離れます．よろしいですか？"
+});
 
+socket.on('create', msg => {
+    eval(msg.code);
+    console.log('created!');
+    if (player1 && player2) {
+        initialize();
+    }
+});
+
+
+function initialize() {
+
+    document.getElementById('character-programming').style.display = 'none';
+    document.getElementById('game').style.visibility = 'visible';
+
+    player1.setVectorFromAngle(HALF_PI);
+    player2.setVectorFromAngle(-HALF_PI);
+
+    for (let i = 0; i < SHOT_MAX_COUNT; i++) {
+        player1ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
+        player1ShotArray[i].setTarget(player2);
+        player1ShotArray[i].setPower(player1.power);
+        player2ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
+        player2ShotArray[i].setTarget(player1);
+        player2ShotArray[i].setPower(player2.power);
+    }
+
+    player1.setShotArray(player1ShotArray);
+    player2.setShotArray(player2ShotArray);
+
+
+    for (let i = 0; i < BACKGROUND_STAR_MAX_COUNT; i++) {
+        let size = random(1, BACKGROUND_STAR_MAX_SIZE);
+        let speed = random(1, BACKGROUND_STAR_MAX_SPEED);
+
+        backgroundStarArray[i] = new BackgroundStar(size, speed);
+
+        let x = random(width);
+        let y = random(height);
+        backgroundStarArray[i].set(x, y);
+    }
+    isStart = true;
+}
+
+socket.on('disconnected', msg => {
+    alert('player disconnected');
+});
+window.onbeforeunload = () => {
+    socket.emit('playerDisconnected', { 
+        'roomId': ss.roomId
+    });
+};

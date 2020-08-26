@@ -23,7 +23,7 @@
             </form>
         </p>
         <code><pre id="character-editor"></pre></code>
-        <button id="startButton" class="btn-square" onclick="createCharacter()">Start!</button>
+        <button id="start" class="btn-square" @click="onClick" :disabled="isDisabled">Start!</button>
     </div>
 
     <div id="game">
@@ -42,32 +42,22 @@
                 <code><pre id="command_output"></pre></code>
             </div>
             <div class="button_wrapper">
-                <button id="player1ReadyButton" class="btn-square"onclick="player1Ready()">Ready</button>
-                <button id="player2ReadyButton" class="btn-square" onclick="player2Ready()">Ready</button><br>
-                <input id="checkbox" type="checkbox">Key Input
+                <button id="player1-ready" class="btn-square" @click="onClick">Ready</button>
+                <button id="player2-ready" class="btn-square" @click="onClick">Ready</button><br>
             </div>
-            
         </div>
     </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     <script src="../socket.io/socket.io.js"></script>
-    <script src="/js/characterProgramming.js"></script>
-    <script src="/js/hacking.js"></script>
-    <script src="/js/editor.js"></script>
-    <script src="/js/character.js"></script>
-    <script src="/js/script.js"></script>
-    <script>
-        socket.on('disconnected', msg => {
-            alert('player disconnected');
-        });
-        window.onbeforeunload = () => {
-            socket.emit('playerDisconnected', { 
-                'roomId': ss.roomId
-            });
-        };
-    </script>
+    <script src="/js/utils/character.js"></script>
+    <script src="/js/utils/hacking.js"></script>
+    <script src="/js/vsPlayer/settings.js"></script>
+    <script src="/js/vsPlayer/render.js"></script>
+    <script src="/js/vsPlayer/main.js"></script>
 </body>
 </html>

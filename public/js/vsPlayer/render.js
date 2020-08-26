@@ -22,19 +22,23 @@ let player1Image = '/img/player1.png';
 let player2Image = '/img/player2.png';
 let shotImage = '/img/viper_shot.png';
 let misakiFont = null;
-let explosionSound = null;
-let winSound = null;
 const backgroundColor = "#121259";
 
-let keyInput;
+let ctx;
 let retryButton;
 
 function setup() {
     let canvas = createCanvas(840, 480, P2D);
     canvas.parent('canvas');
+    ctx = document.getElementById('defaultCanvas0').getContext('2d');
     textFont("arial black");
     gameState = "Programming";
     barHeight = height / 10;
+    if (playerNum == 1) {
+        aceEditor2.setOption("readOnly", true);
+    } else if (playerNum == 2) {
+        aceEditor1.setOption("readOnly", true);
+    }
 }
 
 function draw() {
@@ -42,8 +46,8 @@ function draw() {
         background(backgroundColor);
         backgroundStarArray.map((v) => {
             v.update();
-        });
-
+        }); 
+        
         player1.update();
         player2.update();
         player1ShotArray.map((v) => {
@@ -52,6 +56,16 @@ function draw() {
         player2ShotArray.map((v) => {
             v.update();
         });
+
+        if (player1State === true && player2State !== true) {
+            textSize(24);
+            text('Player1 Ready', 120, height/2);
+        }
+        if (player2State === true && player1State !== true) {
+            textSize(24);
+            text('player2 Ready', 120+width/2, height/2);
+        }
+
         if (player1.life === 0 && player2.life === 0) {
             textSize(64);
             fill(255);
@@ -64,8 +78,8 @@ function draw() {
             finalize();
         } else if (player2.life == 0) {
             textSize(64);
-            fill('blue');
-            text('Player1 Win!\nPress R to Retry', width / 2 - 200 , height /2);
+            fill(player1Color);
+            text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
             finalize();
         }
         
@@ -74,7 +88,6 @@ function draw() {
         rect(0, height - 50, width, barHeight);
         drawParameters();
     }
-    keyInput = document.getElementById('checkbox').checked;
 }
 
 function drawParameters() {
@@ -106,85 +119,13 @@ function drawParameters() {
     text(timer, width/2 - 20, 30);
 }
 
-function createCharacter() {
-    document.getElementById('startButton').disabled = true;
-    eval(editor.getValue());
-    player2 = new Fighter2();
-    initialize();
-}
-
-function initialize() {
-
-    document.getElementById('character-programming').style.display = 'none';
-    document.getElementById('game').style.visibility = 'visible';
-
-    player1.setVectorFromAngle(HALF_PI);
-    player2.setVectorFromAngle(-HALF_PI);
-    //computerのコードを開始時にセット
-    player2.setCode(computerCodes[Math.floor(Math.random() * computerCodes.length)]);
-    //targetをセット
-    player1.setTarget(player2);
-    player2.setTarget(player1);
-
-    for (let i = 0; i < SHOT_MAX_COUNT; i++) {
-        player1ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
-        player1ShotArray[i].setTarget(player2);
-        player1ShotArray[i].setPower(player1.power);
-        player2ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
-        player2ShotArray[i].setTarget(player1);
-        player2ShotArray[i].setPower(player2.power);
-    }
-
-    player1.setShotArray(player1ShotArray);
-    player2.setShotArray(player2ShotArray);
-
-
-    for (let i = 0; i < BACKGROUND_STAR_MAX_COUNT; i++) {
-        let size = random(1, BACKGROUND_STAR_MAX_SIZE);
-        let speed = random(1, BACKGROUND_STAR_MAX_SPEED);
-
-        backgroundStarArray[i] = new BackgroundStar(size, speed);
-
-        let x = random(width);
-        let y = random(height);
-        backgroundStarArray[i].set(x, y);
-    }
-    isStart = true;
-}
-
 function finalize() {
     gameState = "End";
+    socket.emit('gameEnd', {
+        'roomId': ss.roomId
+    });
     noLoop();
 }
 
-function keyPressed() {
 
-    if (keyInput === true && gameState === "Game") {
-        if (keyCode === UP_ARROW) {
-            player1.moveUp();
-        } else if (keyCode === DOWN_ARROW) {
-            player1.moveDown();
-        } else if (keyCode === 90) {
-            player1.shot();
-        }
-    }
-    if (gameState === "End" && keyCode === 82) {
-        location.reload();
-    }
-}
-
-window.addEventListener("beforeunload", (e) => {
-    e.returnValue = "ページを離れます．よろしいですか？"
-});
-
-class Fighter2 extends TextFighter2 {
-    constructor() {
-        super();
-        this.appearance = "🐉";
-        this.life = 200;
-        this.speed = 25;
-        this.power = 25;
-        this.password = 'pass';
-    }
-}
 
