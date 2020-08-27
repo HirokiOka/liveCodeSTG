@@ -15,11 +15,11 @@
             <div id="player-num"><%= playerNum %></div>
         </div>
         <p>
-            <form id="target" style="color: white;">
-                <input type="radio" name="type" value="attack">attack
-                <input type="radio" name="type" value="speed">speed
-                <input type="radio" name="type" value="tank">tank
-                <input type="radio" name="type" value="custom" checked>custom
+            <form id="character-type">
+                <input type="radio" value="attack" v-model="type">attack
+                <input type="radio" value="speed" v-model="type">speed
+                <input type="radio" value="tank" v-model="type">tank
+                <input type="radio" value="custom" v-model="type" checked>custom
             </form>
         </p>
         <code><pre id="character-editor"></pre></code>

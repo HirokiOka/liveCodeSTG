@@ -17,11 +17,10 @@ window.addEventListener("keydown", (e) => {
     }
 });
 
-
 let runButton = new Vue({
     el: "#run-button",
     methods: {
-        onClick: function() {
+        onClick() {
             runCode();
         }
     }

@@ -1,10 +1,35 @@
+let radioButton = new Vue({
+    el: "#character-type",
+    data: {
+        type: 'custom'
+    },
+    watch: {
+        type() {
+            switch (this.type) {
+                case 'attack':
+                    editor.setValue(attack);
+                    break;
+                case 'speed':
+                    editor.setValue(speed);
+                    break;
+                case 'tank':
+                    editor.setValue(tank);
+                    break;
+                case 'custom':
+                    editor.setValue(defaultCode);
+                    break;
+            }
+        }
+    }
+});
+
 let startButton = new Vue({
     el: "#start",
     data: {
         isDisabled: false
     },
     methods: {
-        onClick: function() {
+        onClick() {
             this.isDisabled = true;
             socket.emit('create', {
                 'code': editor.getValue(),
@@ -45,7 +70,7 @@ window.addEventListener("keydown", (e)=> {
 let player1ReadyButton = new Vue({
     el: "#player1-ready",
     methods: {
-        onClick: function() {
+        onClick() {
             player1Ready();
         }
     }
@@ -54,7 +79,7 @@ let player1ReadyButton = new Vue({
 let player2ReadyButton = new Vue({
     el: "#player2-ready",
     methods: {
-        onClick: function() {
+        onClick() {
             player2Ready();
         }
     }

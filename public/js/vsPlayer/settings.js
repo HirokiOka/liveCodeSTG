@@ -67,20 +67,20 @@ let tank = `class Fighter extends TextFighter${playerNum} {
 player${playerNum} = new Fighter();
 `;
 
-let radio = document.getElementById('target');
+// let radio = document.getElementById('target');
 
-radio.addEventListener('click', () => {
-    let type = radio.type.value;
-    if (type === "attack") {
-        editor.setValue(attack)
-    } else if (type === "speed") {
-        editor.setValue(speed);
-    } else if (type === "tank") {
-        editor.setValue(tank);
-    } else if (type === "custom") {
-        editor.setValue(defaultCode);
-    }
-}, false);
+// radio.addEventListener('click', () => {
+//     let type = radio.type.value;
+//     if (type === "attack") {
+//         editor.setValue(attack)
+//     } else if (type === "speed") {
+//         editor.setValue(speed);
+//     } else if (type === "tank") {
+//         editor.setValue(tank);
+//     } else if (type === "custom") {
+//         editor.setValue(defaultCode);
+//     }
+// }, false);
 
 editor.setValue(defaultCode);
 

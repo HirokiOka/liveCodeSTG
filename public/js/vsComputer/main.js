@@ -5,9 +5,8 @@ let radioButton = new Vue({
     data: {
         type: 'custom'
     },
-    methods: {
-        onClick: function() {
-            // console.log(this.type);
+    watch: {
+        type() {
             switch (this.type) {
                 case 'attack':
                     editor.setValue(attack);
@@ -41,7 +40,7 @@ let startButton = new Vue({
         isDisabled: false
     },
     methods: {
-        onClick: function() {
+        onClick() {
             this.isDisabled = true;
             eval(editor.getValue());
             player2 = new Fighter2();
@@ -97,7 +96,7 @@ let player1ReadyButton = new Vue({
         isDisabled: false
     },
     methods: {
-        onClick: function() {
+        onClick() {
             player1Ready();
         }
     }
