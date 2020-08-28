@@ -33,7 +33,6 @@ function characterProgrammingInitialize() {
     editor.setValue(defaultCode);
 }
 
-
 let startButton = new Vue({
     el: "#start",
     data: {
@@ -44,7 +43,7 @@ let startButton = new Vue({
             this.isDisabled = true;
             eval(editor.getValue());
             player2 = new Fighter2();
-            characterProgramming.show = false;
+            // characterProgramming.show = false;
             initialize();
         }
     }
@@ -125,12 +124,12 @@ function gameStart() {
             eval(player1.code);
             player1Action = setInterval(() => {
                 player1Loop();
-            }, (100 - player1.speed) * 10);
+            }, (100 - player1.clock) * 10);
             
             eval(player2.code);
             player2Action = setInterval(() => {
                 player2Loop();
-            }, (100 - player2.speed) * 10);
+            }, (100 - player2.clock) * 10);
         } catch(e) {
             console.log(e);
         }

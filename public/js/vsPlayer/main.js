@@ -39,13 +39,12 @@ let startButton = new Vue({
     }
 });
 
-window.addEventListener("keydown", (e)=> {
+window.addEventListener("keydown", e => {
     if (gameState === "Game") {
         e.preventDefault();
         return;
     }
     if (gameState !== "Programming") { return; }
-
     if (e.keyCode === 13 && e.ctrlKey) {
         if (aceEditor1.isFocused()) {
             player1Ready();
@@ -134,12 +133,12 @@ function gameStart() {
             eval(player1.code);
             player1Action = setInterval(() => {
                 player1Loop();
-            }, (100 - player1.speed) * 10);
+            }, (100 - player1.clock) * 10);
             
             eval(player2.code);
             player2Action = setInterval(() => {
                 player2Loop();
-            }, (100 - player2.speed) * 10);
+            }, (100 - player2.clock) * 10);
         } catch(e) {
             console.log(e);
         }

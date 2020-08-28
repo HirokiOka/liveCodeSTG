@@ -32,9 +32,9 @@ class Character {
 }
 
 class Player extends Character {
-    constructor(x, y, w, h, speed, power, imagePath) {
+    constructor(x, y, w, h, clock, power, imagePath) {
         super(x, y, w, h, 0, imagePath);
-        this.speed = speed;
+        this.clock = clock;
         this.power = power;
         this.direction = 'top';
         this.shotCheckCounter = 0;
@@ -68,12 +68,12 @@ class Player extends Character {
     }
 
     moveUp () {
-        this.position.y -= this.speed;
+        this.position.y -= this.clock;
         this.direction = 'top';
     }
 
     moveDown () {
-        this.position.y += this.speed;
+        this.position.y += this.clock;
         this.direction = 'bottom';
     }
 
@@ -153,7 +153,7 @@ class BaseFighter1 extends Player {
     }
 }
 
-//x, y, w, h, speed, power, imagePath
+//x, y, w, h, clock, power, imagePath
 class BaseFighter2 extends Player {
     constructor() {
         super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png');
@@ -192,7 +192,7 @@ class Fighter extends BaseFighter1 {
     constructor() {
         super();
         this.life = 100;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 25;
         this.confidentiality = 25;
         this.password = 'pass';
@@ -204,7 +204,7 @@ class Fighter2 extends TextFighter2 {
         super();
         this.appearance = "🐉";
         this.life = 200;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 25;
         this.password = 'pass';
     }
@@ -214,7 +214,7 @@ class Fighter2 extends TextFighter2 {
 class Shot extends Character {
     constructor(x, y, w, h, imagePath) {
         super(x, y, w, h, 0, imagePath);
-        this.speed = 7;
+        this.clock = 7;
         this.power = 20;
         this.target = null;
     }
@@ -238,8 +238,8 @@ class Shot extends Character {
         if (this.position.x + this.width < 0 || this.position.x + this.width > width) {
             this.life = 0;
         }
-        this.position.x += this.vector.x * this.speed;
-        this.position.y += this.vector.y * this.speed;
+        this.position.x += this.vector.x * this.clock;
+        this.position.y += this.vector.y * this.clock;
 
         let dist = this.position.dist(this.target.position);
         
@@ -266,9 +266,9 @@ class Shot extends Character {
 }
 
 class BackgroundStar {
-    constructor(size, speed, color="#ffffff") {
+    constructor(size, clock, color="#ffffff") {
         this.size = size;
-        this.speed = speed;
+        this.clock = clock;
         this.color = color;
         this.position = null;
     }
@@ -279,7 +279,7 @@ class BackgroundStar {
 
     update() {
         fill(this.color);
-        this.position.x += this.speed;
+        this.position.x += this.clock;
         square(this.position.x - this.size / 2, this.position.y - this.size / 2, this.size);
 
         if (this.position.x + this.size > width) {

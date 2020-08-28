@@ -41,7 +41,7 @@ let defaultCode = `class Fighter extends TextFighter1 {
         super();
         this.appearance = "🛸";
         this.life = 200;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 25;
         this.password = 'pass';
     }
@@ -53,7 +53,7 @@ let attack = `class Fighter extends TextFighter1 {
         super();
         this.appearance = "🚀";
         this.life = 150;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 70;
         this.password = 'pass';
     }
@@ -65,7 +65,7 @@ let speed = `class Fighter extends TextFighter1 {
         super();
         this.appearance = "🛩";
         this.life = 150;
-        this.speed = 50;
+        this.clock = 50;
         this.power = 25;
         this.password = 'pass';
     }
@@ -77,7 +77,7 @@ let tank = `class Fighter extends TextFighter1 {
         super();
         this.appearance = "🛳";
         this.life = 200;
-        this.speed = 15;
+        this.clock = 15;
         this.power = 40;
         this.password = 'pass';
     }

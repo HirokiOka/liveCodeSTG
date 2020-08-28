@@ -14,7 +14,7 @@ let defaultCode = `class Fighter${playerNum} extends TextFighter${playerNum} {
         super();
         this.appearance = "🛸";
         this.life = 200;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 25;
         this.password = 'pass';
     }
@@ -33,7 +33,7 @@ let attack = `class Fighter extends TextFighter${playerNum} {
         super();
         this.appearance = "🚀";
         this.life = 150;
-        this.speed = 25;
+        this.clock = 25;
         this.power = 70;
         this.password = 'pass';
     }
@@ -46,7 +46,7 @@ let speed = `class Fighter extends TextFighter${playerNum} {
         super();
         this.appearance = "🛩";
         this.life = 150;
-        this.speed = 50;
+        this.clock = 50;
         this.power = 25;
         this.password = 'pass';
     }
@@ -59,7 +59,7 @@ let tank = `class Fighter extends TextFighter${playerNum} {
         super();
         this.appearance = "🛳";
         this.life = 200;
-        this.speed = 15;
+        this.clock = 15;
         this.power = 40;
         this.password = 'pass';
     }
@@ -67,20 +67,6 @@ let tank = `class Fighter extends TextFighter${playerNum} {
 player${playerNum} = new Fighter();
 `;
 
-// let radio = document.getElementById('target');
-
-// radio.addEventListener('click', () => {
-//     let type = radio.type.value;
-//     if (type === "attack") {
-//         editor.setValue(attack)
-//     } else if (type === "speed") {
-//         editor.setValue(speed);
-//     } else if (type === "tank") {
-//         editor.setValue(tank);
-//     } else if (type === "custom") {
-//         editor.setValue(defaultCode);
-//     }
-// }, false);
 
 editor.setValue(defaultCode);
 
