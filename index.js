@@ -1,12 +1,20 @@
+const { Client } = require('pg');
 const express = require('express');
 const app = express();
 const ejs = require('ejs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const dotenv = require('dotenv');
+dotenv.config();
 
-const port = process.env.PORT || 3000;
-// let client1 = false;
-// let client2 = false;
+const port = 3000;
+let dbClient = new Client({
+    user: process.env.USER,
+    host: process.env.HOST,
+    database: process.env.DATABASE,
+    password: process.env.PASSWORD,
+    port: process.env.PORT
+});
 let player1 = false;
 let player2 = false;
 let clientId = 0;
@@ -16,9 +24,14 @@ let count = 0;
 let waitingUsers = [];
 let matchCount = 0;
 
+
+
 app.set('ejs', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+
+dbClient.connect()
+            .then(() => console.log('DB Connected successfully'));
 
 app.get('/', (req, res) => {
     res.render('top');
@@ -43,10 +56,6 @@ function matching() {
             waitingUsers.shift();
             waitingUsers.shift();
 
-            /*
-            ここの処理のなんとかする
-            ひとつのroomに2人のプレイヤを割り当てる
-            */
             io.on('connection', socket => {
                 socket.broadcast.emit('match', {
                     'users': selectedUsers,
@@ -70,6 +79,7 @@ function matching() {
 }
 
 app.get('/vs-player', (req, res) => {
+    //ここの処理もっとよくできそう
     if (player1 === false) {
         res.render('vsPlayer', { playerNum: 1 });
         player1 = true;
@@ -84,6 +94,7 @@ app.get('/vs-player', (req, res) => {
         player1 = false;
         player2 = false;
     }
+
 });
 
 app.get('/vs-computer', (req, res) => {
@@ -103,12 +114,29 @@ io.on('connection', socket => {
 
     //プレイヤーから送られてきた戦略のコードを同じroomのプレイヤーに送る
     socket.on('player1', msg => {
+        let query = {
+            text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
+            values: [msg.player1Code]
+        };
+
+        dbClient.query(query, (err, res) => {
+            console.log(err, res);
+        });
+
         io.to(msg.roomId).emit('player1', {
             "player1Code": msg.player1Code,
         });
     });
 
     socket.on('player2', msg => {
+        let query = {
+            text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
+            values: [msg.player2Code]
+        };
+        dbClient.query(query, (err, res) => {
+            console.log(err, res);
+        });
+
         io.to(msg.roomId).emit('player2', {
             "player2Code": msg.player2Code,
         });
@@ -154,3 +182,7 @@ http.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
 
+http.on('close', (e) => {
+    dbClient.end();
+    console.log('closed');
+})

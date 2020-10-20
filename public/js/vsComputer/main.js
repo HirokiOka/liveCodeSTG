@@ -106,6 +106,7 @@ function player1Ready() {
     player1.setCode(aceEditor1.getValue());
     this.isDisabled = true;
     player1State = true;
+    //ここにsocket.ioでindex.jsにコード送る処理
     gameStart();
 }
 
