@@ -30,7 +30,6 @@ app.set('ejs', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-console.log(dbClient);
 dbClient.connect()
             .then(() => console.log('DB Connected successfully'));
 
