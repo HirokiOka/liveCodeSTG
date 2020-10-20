@@ -7,13 +7,13 @@ const io = require('socket.io')(http);
 const dotenv = require('dotenv');
 dotenv.config();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 let dbClient = new Client({
     user: process.env.USER,
     host: process.env.HOST,
     database: process.env.DATABASE,
     password: process.env.PASSWORD,
-    port: process.env.PORT
+    port: process.env.DBPORT
 });
 let player1 = false;
 let player2 = false;
