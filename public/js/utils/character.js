@@ -78,7 +78,7 @@ class Player extends Character {
     }
 
     randomMove() {
-        randomSeed(floor(Date.now()));
+        randomSeed(floor(Date.now()) * this.id);
         let r = random();
         if (r < 1/2) {
             this.moveUp();
@@ -164,6 +164,7 @@ class TextFighter1 extends Player {
     constructor() {
         super(40, height / 2, 64, 64, 20, 20, '/img/player1.png');
         this.size = 64;
+        this.id = 1;
     }
 
     draw() {
@@ -178,6 +179,7 @@ class TextFighter2 extends Player {
     constructor() {
         super(width - 40, height / 2, 64, 64, 25, 20, '/img/player2.png', player1);
         this.size = 64;
+        this.id = 2;
     }
 
     draw() {

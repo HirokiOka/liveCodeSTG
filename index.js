@@ -15,6 +15,14 @@ let dbClient = new Client({
     password: process.env.PASSWORD,
     port: process.env.DBPORT
 });
+//開発環境用DB
+// let dbClient = new Client({
+//     user: process.env.DEVELOPMENTUSER,
+//     host: process.env.DEVELOPMENTHOST,
+//     database: process.env.DEVELOPMENTDATABASE,
+//     password: process.env.DEVELOPMENTPASSWORD,
+//     port: process.env.DEVELOPMENTDBPORT
+// });
 let player1 = false;
 let player2 = false;
 let clientId = 0;
@@ -136,7 +144,7 @@ io.on('connection', socket => {
         dbClient.query(query, (err, res) => {
             console.log(err, res);
         });
-
+        
         io.to(msg.roomId).emit('player2', {
             "player2Code": msg.player2Code,
         });
