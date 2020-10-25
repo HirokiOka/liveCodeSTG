@@ -68,6 +68,11 @@ window.addEventListener("keydown", e => {
 
 let player1ReadyButton = new Vue({
     el: "#player1-ready",
+    data: {
+        isVisible() {
+            return ss.playerNum == '1';
+        }
+    },
     methods: {
         onClick() {
             player1Ready();
@@ -77,6 +82,11 @@ let player1ReadyButton = new Vue({
 
 let player2ReadyButton = new Vue({
     el: "#player2-ready",
+    data: {
+        isVisible() {
+            return ss.playerNum == '2';
+        }
+    },
     methods: {
         onClick() {
             player2Ready();
@@ -99,6 +109,24 @@ function player2Ready() {
         'roomId': ss.roomId
     });
 }
+
+let resetButton = new Vue({
+    el: "#reset",
+    methods: {
+        onClick() {
+            if (ss.playerNum == '1') {
+                aceEditor1.setValue('//Player1\n\nfunction player1Loop() {\n\n}');
+            } else if (ss.playerNum == '2') {
+                aceEditor2.setValue('//Player2\n\nfunction player2Loop() {\n\n}');
+            }
+//             aceEditor1.setValue(`//Player
+
+// function player1Loop() {
+
+// }`);
+        }
+    }
+});
 
 //サーバから送られてきたコードをエディタにセット
 socket.on('player1', msg => {

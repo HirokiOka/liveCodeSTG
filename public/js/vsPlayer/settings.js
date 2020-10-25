@@ -69,6 +69,7 @@ player${playerNum} = new Fighter();
 
 
 editor.setValue(defaultCode);
+sessionStorage.setItem('playerNum',playerNum);
 
 const gameInterval = 10000;
 

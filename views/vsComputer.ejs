@@ -35,6 +35,7 @@
                 <div id="editor2">
                     <code><pre id="player2-editor"></pre></code>
                 </div>
+
             </div>
             <div id="command_line">
                 <code><pre id="command_input"></pre></code>
@@ -42,6 +43,7 @@
             </div>
             <div class="button_wrapper">
                 <button id="player1-ready" class="btn-square"@click="onClick" :disabled="isDisabled">Ready</button>
+                <button id="reset" class="btn-square" @click="onClick">Reset</button>
             </div>
         </div>
     </div>

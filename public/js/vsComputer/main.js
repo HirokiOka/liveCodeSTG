@@ -110,6 +110,19 @@ function player1Ready() {
     gameStart();
 }
 
+let resetButton = new Vue({
+    el: "#reset",
+    methods: {
+        onClick() {
+            aceEditor1.setValue(`//Player
+
+function player1Loop() {
+            
+}`);
+        }
+    }
+});
+
 function gameStart() {
     if (gameState === "End") { return; }
 

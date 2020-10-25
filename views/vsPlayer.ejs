@@ -42,8 +42,9 @@
                 <code><pre id="command_output"></pre></code>
             </div>
             <div class="button_wrapper">
-                <button id="player1-ready" class="btn-square" @click="onClick">Ready</button>
-                <button id="player2-ready" class="btn-square" @click="onClick">Ready</button><br>
+                <button id="player1-ready" class="btn-square" @click="onClick" v-show="isVisible()">Ready</button>
+                <button id="player2-ready" class="btn-square" @click="onClick" v-show="isVisible()">Ready</button>
+                <button id="reset" class="btn-square" @click="onClick">Reset</button>
             </div>
         </div>
     </div>
