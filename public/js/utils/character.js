@@ -219,6 +219,7 @@ class Shot extends Character {
         this.clock = 7;
         this.power = 20;
         this.target = null;
+        this.sound = null;
     }
     set(x, y) {
         this.position.set(x, y);
@@ -233,6 +234,10 @@ class Shot extends Character {
         if (target != null) {
             this.target = target;
         }
+    }
+
+    setSound(sound) {
+        this.sound = sound;
     }
 
     update() {
@@ -253,7 +258,7 @@ class Shot extends Character {
                 this.target.life = 0;
             }
             this.life = 0;
-            // playCollisionSound();
+            this.sound.play();
         }
         this.draw();
     }

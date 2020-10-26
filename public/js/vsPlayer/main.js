@@ -1,3 +1,11 @@
+let exSound = new Sound();
+exSound.load('./sound/explosion.mp3', (error) => {
+    if (error != null) {
+        alert('ファイルの読み込みエラーです．');
+        return;
+    }
+});
+
 let radioButton = new Vue({
     el: "#character-type",
     data: {
@@ -119,11 +127,6 @@ let resetButton = new Vue({
             } else if (ss.playerNum == '2') {
                 aceEditor2.setValue('//Player2\n\nfunction player2Loop() {\n\n}');
             }
-//             aceEditor1.setValue(`//Player
-
-// function player1Loop() {
-
-// }`);
         }
     }
 });
@@ -216,9 +219,11 @@ function initialize() {
         player1ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
         player1ShotArray[i].setTarget(player2);
         player1ShotArray[i].setPower(player1.power);
+        player1ShotArray[i].setSound(exSound);
         player2ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
         player2ShotArray[i].setTarget(player1);
         player2ShotArray[i].setPower(player2.power);
+        player2ShotArray[i].setSound(exSound);
     }
 
     player1.setShotArray(player1ShotArray);
