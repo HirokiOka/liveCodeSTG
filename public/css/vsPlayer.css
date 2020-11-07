@@ -73,7 +73,7 @@ h1 {
 
 #command_output {
     height: 26px;
-    width: 400px;
+    width: 420px;
     margin: 0 auto;
 }
 
@@ -105,10 +105,38 @@ h1 {
 #defaultCanvas0 {
     z-index: 2;
     position: flex;
-
 }
+
+#terminal {
+    position: absolute;
+    display: flex;
+    margin: 0 auto;
+    left: 50%;
+    transform: translate(-50%);
+    
+}
+
+#player1-terminal {
+    height: 26px;
+    width: 420px;
+    float: left;
+    margin: auto;
+}
+
+#player2-terminal {
+    height: 26px;
+    width: 400px;
+    float: right;
+    margin: auto;
+}
+
 .button_wrapper {
     text-align: center;
+    margin: 40px auto;
+    position: absolute;
+    display: flex;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 #client-id {

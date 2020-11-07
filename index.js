@@ -28,7 +28,6 @@ let player2 = false;
 let clientId = 0;
 let roomId = 1;
 let activeRooms = [];
-let count = 0;
 let waitingUsers = [];
 let matchCount = 0;
 
