@@ -75,8 +75,10 @@ const gameInterval = 10000;
 
 let aceEditor1 = ace.edit("player1-editor");
 let aceEditor2 = ace.edit("player2-editor");
-let commandInput = ace.edit("command_input");
-let commandOutput = ace.edit("command_output");
+// let commandInput = ace.edit("command_input");
+// let commandOutput = ace.edit("command_output");
+let player1Terminal = ace.edit("player1-terminal");
+let player2Terminal = ace.edit("player2-terminal");
 let player1State = false;
 let player2State = false;
 let editor1 = document.getElementById("editor1");
@@ -116,16 +118,26 @@ function player2Loop() {
 }`);
 aceEditor2.$blockScrolling = Infinity;
 
-commandInput.setOptions({
-    fontSize: 18,
-    theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript",
-    showLineNumbers: false,
-    showGutter: false
-});
-commandInput.$blockScrolling = Infinity;
+// commandInput.setOptions({
+//     fontSize: 18,
+//     theme: "ace/theme/chaos",
+//     mode: "ace/mode/javascript",
+//     showLineNumbers: false,
+//     showGutter: false
+// });
+// commandInput.$blockScrolling = Infinity;
 
-commandOutput.setOptions({
+// commandOutput.setOptions({
+//     fontSize: 18,
+//     theme: "ace/theme/chaos",
+//     mode: "ace/mode/javascript",
+//     showLineNumbers: false,
+//     showGutter: false,
+//     readOnly: true
+// });
+// commandOutput.$blockScrolling = Infinity;
+
+player1Terminal.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
     mode: "ace/mode/javascript",
@@ -133,8 +145,19 @@ commandOutput.setOptions({
     showGutter: false,
     readOnly: true
 });
-commandOutput.$blockScrolling = Infinity;
+player1Terminal.setValue("player1:");
+player1Terminal.$blockScrolling = Infinity;
 
+player2Terminal.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    showLineNumbers: false,
+    showGutter: false,
+    readOnly: true
+});
+player2Terminal.setValue("player2:");
+player2Terminal.$blockScrolling = Infinity;
 
 
 

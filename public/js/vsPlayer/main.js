@@ -66,12 +66,6 @@ window.addEventListener("keydown", e => {
             createCharacter();
         }
     }
-
-    if (e.keyCode === 13 && commandInput.isFocused()) {
-        eval(commandInput.getValue());
-        commandInput.setValue("");
-    }
-    
 });
 
 let player1ReadyButton = new Vue({
@@ -160,19 +154,23 @@ function gameStart() {
         aceEditor1.setValue(player1.code);
         aceEditor2.setValue(player2.code);
         
-        try {
-            eval(player1.code);
-            player1Action = setInterval(() => {
+        eval(player1.code);
+        eval(player2.code);
+        player1Action = setInterval(() => {
+            try {
                 player1Loop();
-            }, (100 - player1.clock) * 10);
-            
-            eval(player2.code);
-            player2Action = setInterval(() => {
+            } catch (e1) {
+                player1Terminal.setValue("player1:" + e1.toString());
+            }
+        }, (100 - player1.clock) * 10);
+
+        player2Action = setInterval(() => {
+            try {
                 player2Loop();
-            }, (100 - player2.clock) * 10);
-        } catch(e) {
-            console.log(e);
-        }
+            } catch (e2) {
+                player2Terminal.setValue("player2:" + e2.toString());
+            }
+        }, (100 - player2.clock) * 10);
 
         setTimeout(() => {
             clearInterval(player1Action);
