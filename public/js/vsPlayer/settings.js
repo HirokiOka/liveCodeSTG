@@ -102,14 +102,22 @@ function player1Loop() {
 aceEditor1.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript"
+    mode: "ace/mode/javascript",
+    wrap: true,
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
 });
 aceEditor1.$blockScrolling = Infinity;
 
 aceEditor2.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript"
+    mode: "ace/mode/javascript",
+    wrap: true,
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
 });
 aceEditor2.setValue(`//Player2
 

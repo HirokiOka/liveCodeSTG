@@ -95,7 +95,11 @@ aceEditor1.$blockScrolling = Infinity;
 aceEditor1.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
-    mode: "ace/mode/javascript"
+    mode: "ace/mode/javascript",
+    wrap: true,
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
 });
 aceEditor1.resize();
 
@@ -105,7 +109,11 @@ aceEditor2.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
     mode: "ace/mode/javascript",
-    readOnly: true
+    readOnly: true,
+    wrap: true,
+    // enableBasicAutocompletion: true,
+    // enableSnippets: true,
+    // enableLiveAutocompletion: true
 });
 aceEditor2.setValue(`//Computer
 
@@ -141,7 +149,8 @@ player1Terminal.setOptions({
     mode: "ace/mode/SH",
     showLineNumbers: false,
     showGutter: false,
-    readOnly: true
+    readOnly: true,
+    wrap: true
 });
 player1Terminal.setValue("player1:");
 player1Terminal.$blockScrolling = Infinity;
@@ -152,7 +161,8 @@ player2Terminal.setOptions({
     mode: "ace/mode/SH",
     showLineNumbers: false,
     showGutter: false,
-    readOnly: true
+    readOnly: true,
+    wrap: true
 });
 player2Terminal.setValue("player2:");
 player2Terminal.$blockScrolling = Infinity;
