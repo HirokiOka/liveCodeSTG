@@ -16,7 +16,7 @@ let dbClient = new Client({
     port: process.env.DBPORT
 });
 //開発環境用DB
-let dbClient = new Client({
+// let dbClient = new Client({
 //     user: process.env.DEVELOPMENTUSER,
 //     host: process.env.DEVELOPMENTHOST,
 //     database: process.env.DEVELOPMENTDATABASE,
