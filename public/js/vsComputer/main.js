@@ -50,6 +50,10 @@ let startButton = new Vue({
         onClick() {
             this.isDisabled = true;
             eval(editor.getValue());
+            // let paramSum = player1.life + player1.clock + player1.power;
+            // if (paramSum > 100) {
+            //     delete Fighter;
+            // }
             player2 = new Fighter2();
             // characterProgramming.show = false;
             initialize();
@@ -117,6 +121,9 @@ function player1Ready() {
     this.isDisabled = true;
     player1State = true;
     //ここにsocket.ioでindex.jsにコード送る処理
+    socket.emit('vscomputer', {
+        code: aceEditor1.getValue()
+    });
     gameStart();
 }
 

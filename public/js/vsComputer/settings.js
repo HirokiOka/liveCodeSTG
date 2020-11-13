@@ -1,4 +1,5 @@
 const gameInterval = 10000;
+const socket = io();
 
 let aceEditor1 = ace.edit("player1-editor");
 let aceEditor2 = ace.edit("player2-editor");

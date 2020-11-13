@@ -57,15 +57,15 @@ class Player extends Character {
         this.code = code;
     }
 
-    moveTo(target) {
-        if (target === 'top') {
-            this.position.y = 48;
-        }else if (target === 'center') {
-            this.position.y = 240;
-        } else if (target === 'bottom') {
-            this.position.y = 432;
-        }
-    }
+    // moveTo(target) {
+    //     if (target === 'top') {
+    //         this.position.y = 48;
+    //     }else if (target === 'center') {
+    //         this.position.y = 240;
+    //     } else if (target === 'bottom') {
+    //         this.position.y = 432;
+    //     }
+    // }
 
     moveUp () {
         this.position.y -= this.clock;

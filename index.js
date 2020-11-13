@@ -148,6 +148,16 @@ io.on('connection', socket => {
         });
     });
 
+    socket.on('vscomputer', msg => {
+        let query = {
+            text: 'INSERT INTO vscomputer_code_log (code, timestamp) VALUES($1, current_timestamp)',
+            values: [msg.code]
+        };
+        dbClient.query(query, (err, res) => {
+            console.log(err, res);
+        });
+    });
+
     socket.on('create', msg => {
         io.to(msg.roomId).emit('create', {
             code: msg.code
