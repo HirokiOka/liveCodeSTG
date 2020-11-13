@@ -258,7 +258,10 @@ class Shot extends Character {
                 this.target.life = 0;
             }
             this.life = 0;
-            this.sound.play();
+            if (this.sound !== null) {
+                this.sound.play();
+            }
+            
         }
         this.draw();
     }
