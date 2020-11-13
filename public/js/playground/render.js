@@ -14,6 +14,7 @@ function setup() {
     player = new Fighter();
     enemy = new Fighter();
     player.setVectorFromAngle(HALF_PI);
+    player.id = 1;
     for (let i = 0; i < SHOT_MAX_COUNT; i++) {
         shotArray[i] = new Shot(0, 0, 32, 32, shotImage);
         shotArray[i].setTarget(enemy);

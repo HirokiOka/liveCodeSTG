@@ -4,10 +4,18 @@ let timer = 10;
 let startTime = 0;
 
 let editor = ace.edit("player-editor");
-editor.setFontSize(18);
-editor.setTheme("ace/theme/monokai");
-editor.getSession().setMode("ace/mode/javascript");
+editor.setOptions({
+    fontSize: 18,
+    theme: "ace/theme/chaos",
+    mode: "ace/mode/javascript",
+    wrap: true,
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+});
+
 editor.setValue(`//Player \nfunction playerLoop() {\n\n}`);
+editor.$blockScrolling = Infinity;
 
 let playerAction = null;
 
@@ -34,7 +42,7 @@ function runCode() {
         eval(editor.getValue());
         playerAction = setInterval(() => {
             playerLoop();
-        }, (100 - player.speed) * 10);
+        }, (100 - player.clock) * 10);
     } catch (e) {
         console.log(e);
     }
