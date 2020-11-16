@@ -33,6 +33,22 @@ let radioButton = new Vue({
     }
 });
 
+let hardModeButton = new Vue({
+    el: "#hard-mode",
+    data: {
+        isHard: false
+    },
+    watch: {
+        isHard() {
+            if (!this.isHard) {
+                this.isHard = false;
+            } else {
+                this.isHard = true;
+            }
+        }
+    }
+});
+
 function characterProgrammingInitialize() {
     editor.setFontSize(18);
     editor.setTheme("ace/theme/monokai");
@@ -48,14 +64,18 @@ let startButton = new Vue({
     },
     methods: {
         onClick() {
-            this.isDisabled = true;
             eval(editor.getValue());
-            // let paramSum = player1.life + player1.clock + player1.power;
-            // if (paramSum > 100) {
-            //     delete Fighter;
-            // }
+            if (hardModeButton.isHard) {
+                let paramSum = player1.life + player1.clock + player1.power;
+                if (paramSum > 100) {
+                    alert("パラメータの合計が大きすぎます");
+                    delete player1;
+                    return; 
+                }
+            }
+            player1.life *= 5;
+            this.isDisabled = true;
             player2 = new Fighter2();
-            // characterProgramming.show = false;
             initialize();
         }
     }
@@ -191,6 +211,7 @@ function gameStart() {
 
 
 window.addEventListener("keydown", (e)=> {
+    
     if (gameState === "Game") {
         e.preventDefault();
         return;

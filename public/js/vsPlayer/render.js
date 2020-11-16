@@ -8,7 +8,7 @@ const SCREEN_HEIGHT = 380;
 let round = 1;
 let timer = 10;
 let isRunning = false;
-let gameState;
+// let gameState;
 let isStart = false;
 let barHeight;
 
@@ -74,11 +74,13 @@ function draw() {
         } else if (player1.life === 0) {
             textSize(64);
             fill(player2Color);
+            
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
             finalize();
         } else if (player2.life == 0) {
             textSize(64);
-            fill(player1Color);
+            fill("blue");
+            
             text('Player1 Win!\nPress R to Retry', width / 2 - 200, height /2);
             finalize();
         }
@@ -95,12 +97,22 @@ function drawParameters() {
     textSize(18);
     fill(player1Color);
     stroke(255);
-    rect(5, height - 25, player1.life * 2, 20);
+    if (player1.life < 200) {
+        rect(5, height - 25, player1.life * 2, 20);
+    } else {
+        rect(5, height - 25, 400, 20);
+    }
+    
     noStroke();
     text("player1 Life", 5, height - 30);
     fill(player2Color);
     stroke(255);
-    rect(width / 2, height - 25, player2.life * 2, 20);
+    if (player2.life < 200) {
+        rect(width / 2, height - 25, player2.life * 2, 20);
+    } else {
+        rect(width / 2, height - 25, 400, 20);
+    }
+    
     noStroke();
     text("player2 Life", width / 2, height - 30);
     fill(255);

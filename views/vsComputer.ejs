@@ -13,6 +13,9 @@
         <div class="content">
             <h1>Character Programming Mode</h1>
         </div>
+        <form id="hard-mode" style="color: white;">
+            <input type="checkbox" value="hard" v-model="isHard">hard mode
+        </form>
         <p>
             <form id="character-type">
                 <input type="radio" value="attack" v-model="type">attack
@@ -65,8 +68,8 @@
     <script src="/js/utils/sound.js"></script>
     <!-- <script src="/js/utils/bgm.js"></script> -->
     <script src="/js/vsComputer/settings.js"></script>
-    <script src="/js/vsComputer/main.js"></script>
     <script src="/js/vsComputer/render.js"></script>
+    <script src="/js/vsComputer/main.js"></script>
     
 </body>
 </html>

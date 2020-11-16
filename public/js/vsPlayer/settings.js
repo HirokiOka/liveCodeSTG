@@ -1,4 +1,5 @@
 const socket = io();
+let gameState;
 const editor = ace.edit("character-editor");
 editor.setFontSize(18);
 editor.setTheme("ace/theme/monokai");
@@ -13,29 +14,21 @@ let defaultCode = `class Fighter${playerNum} extends TextFighter${playerNum} {
     constructor() {
         super();
         this.appearance = "🛸";
-        this.life = 200;
-        this.clock = 25;
-        this.power = 25;
-        this.password = 'pass';
+        this.life = 40;
+        this.clock = 30;
+        this.power = 30;
     }
 }
 player${playerNum} = new Fighter${playerNum}();
 `;
 
-if  (playerNum == 1) {
-    document.body.style.backgroundColor = player1Color;
-} else if (playerNum == 2) {
-    document.body.style.backgroundColor = player2Color;
-}
-
 let attack = `class Fighter extends TextFighter${playerNum} {
     constructor() {
         super();
         this.appearance = "🚀";
-        this.life = 150;
-        this.clock = 25;
-        this.power = 70;
-        this.password = 'pass';
+        this.life = 20;
+        this.clock = 30;
+        this.power = 50;
     }
 }
 player${playerNum} = new Fighter();
@@ -45,10 +38,9 @@ let speed = `class Fighter extends TextFighter${playerNum} {
     constructor() {
         super();
         this.appearance = "🛩";
-        this.life = 150;
-        this.clock = 50;
-        this.power = 25;
-        this.password = 'pass';
+        this.life = 20;
+        this.clock = 60;
+        this.power = 20;
     }
 }
 player${playerNum} = new Fighter();
@@ -58,15 +50,20 @@ let tank = `class Fighter extends TextFighter${playerNum} {
     constructor() {
         super();
         this.appearance = "🛳";
-        this.life = 200;
-        this.clock = 15;
-        this.power = 40;
-        this.password = 'pass';
+        this.life = 60;
+        this.clock = 10;
+        this.power = 30;
     }
 }
 player${playerNum} = new Fighter();
 `;
 
+
+if  (playerNum == 1) {
+    document.body.style.backgroundColor = player1Color;
+} else if (playerNum == 2) {
+    document.body.style.backgroundColor = player2Color;
+}
 
 editor.setValue(defaultCode);
 sessionStorage.setItem('playerNum',playerNum);

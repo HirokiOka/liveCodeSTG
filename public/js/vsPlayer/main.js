@@ -31,6 +31,22 @@ let radioButton = new Vue({
     }
 });
 
+let hardModeButton = new Vue({
+    el: "#hard-mode",
+    data: {
+        isHard: false
+    },
+    watch: {
+        isHard() {
+            if (!this.isHard) {
+                this.isHard = false;
+            } else {
+                this.isHard = true;
+            }
+        }
+    }
+});
+
 let startButton = new Vue({
     el: "#start",
     data: {
@@ -38,6 +54,21 @@ let startButton = new Vue({
     },
     methods: {
         onClick() {
+            eval(editor.getValue());
+            let player;
+            if (playerNum == 1) {
+                player = player1;
+            } else if (playerNum == 2){
+                player = player2;
+            }
+            if (hardModeButton.isHard) {
+                let paramSum = player.life + player.clock + player.power;
+                if (paramSum > 100) {
+                    alert("パラメータの合計が大きすぎます");
+                    delete player;
+                    return; 
+                }
+            }
             this.isDisabled = true;
             socket.emit('create', {
                 'code': editor.getValue(),
@@ -196,9 +227,11 @@ window.addEventListener("beforeunload", (e) => {
 });
 
 socket.on('create', msg => {
-    eval(msg.code);
+    eval(msg.code); 
     console.log('created!');
     if (player1 && player2) {
+        player1.life *= 5;
+        player2.life *= 5;
         initialize();
     }
 });

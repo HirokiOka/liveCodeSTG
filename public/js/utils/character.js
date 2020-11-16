@@ -205,10 +205,10 @@ class Fighter2 extends TextFighter2 {
     constructor() {
         super();
         this.appearance = "🐉";
-        this.life = 200;
+        this.life = 50 * 5;
         this.clock = 25;
         this.power = 25;
-        this.password = 'pass';
+        // this.password = 'pass';
     }
 }
 
