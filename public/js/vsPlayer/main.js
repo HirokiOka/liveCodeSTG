@@ -52,20 +52,19 @@ window.addEventListener("keydown", e => {
         e.preventDefault();
         return;
     }
-    if (gameState !== "Programming") { return; }
+
     if (e.keyCode === 13 && e.ctrlKey) {
-        if (aceEditor1.isFocused()) {
+        if (aceEditor1.isFocused() && ss.playerNum == 1) {
             player1Ready();
         }
-
-        if (aceEditor2.isFocused()) {
+        if (aceEditor2.isFocused() && ss.playerNum == 2) {
             player2Ready();
         }
-
         if (editor.isFocused()) {
             createCharacter();
         }
     }
+
 });
 
 let player1ReadyButton = new Vue({

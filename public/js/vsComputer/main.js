@@ -195,7 +195,6 @@ window.addEventListener("keydown", (e)=> {
         e.preventDefault();
         return;
     }
-    if (gameState !== "Programming") { return; }
     if (e.keyCode === 13 && e.ctrlKey) {
         if (aceEditor1.isFocused()) {
             player1Ready();
@@ -204,6 +203,10 @@ window.addEventListener("keydown", (e)=> {
         if (editor.isFocused()) {
             createCharacter();
         }
+    }
+
+    if (gameState === "End" && e.keyCode === 82) {
+        location.reload();
     }
     
 });
