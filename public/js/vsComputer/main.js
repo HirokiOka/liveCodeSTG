@@ -170,7 +170,7 @@ function gameStart() {
         editors.style.opacity = 0.4;
         aceEditor1.setValue(player1.code);
         aceEditor2.setValue(player2.code);
-        
+
         player1Terminal.setValue('player1:');
         player2Terminal.setValue('player2:');
         
@@ -179,6 +179,7 @@ function gameStart() {
         player1Action = setInterval(() => {
             try {
                 player1Loop();
+                player1.isMoved = false;
             } catch (e1) {
                 player1Terminal.setValue("player1:" + e1.toString());
             }
@@ -187,6 +188,7 @@ function gameStart() {
         player2Action = setInterval(() => {
             try {
                 player2Loop();
+                player2.isMoved = false;
             } catch (e2) {
                 player2Terminal.setValue("player2:" + e2.toString());
             }

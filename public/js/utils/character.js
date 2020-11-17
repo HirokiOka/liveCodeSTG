@@ -9,17 +9,6 @@ class Character {
         this.image = loadImage(imagePath);
     }
 
-    // get position() {
-    //     return this._position;
-    // }
-
-    // set position(value) {
-    //     if (isStart) {
-    //         throw Error("Parameters cannot be changed");
-    //     }
-    //     this._position = value;
-    // }
-
     setVector(x, y) {
         this.vector.set(x, y);
     }
@@ -57,6 +46,7 @@ class Player extends Character {
         this._life = 100;
         this.password = 'password';
         this.code = null;
+        this.isMoved = false;
     }
 
     //getter
@@ -119,6 +109,7 @@ class Player extends Character {
     //
     reduceLife(power) {
         this._life -= power;
+        if (this._life < 0) this._life = 0;
     }
 
     //methods
@@ -135,13 +126,17 @@ class Player extends Character {
     }
 
     moveUp () {
+        if (this.isMoved) return;
         this._y -= 25;
         this.direction = 'top';
+        this.isMoved = true;
     }
 
     moveDown () {
+        if (this.isMoved) return;
         this._y += 25;
         this.direction = 'bottom';
+        this.isMoved = true;
     }
 
     randomMove() {
@@ -284,9 +279,9 @@ class Fighter2 extends TextFighter2 {
     constructor() {
         super();
         this.appearance = "🐉";
-        this.life = 50 * 5;
-        this.clock = 25;
-        this.power = 25;
+        this._life = 50 * 5;
+        this._clock = 25;
+        this._power = 25;
         // this.password = 'pass';
     }
 }
@@ -327,15 +322,15 @@ class Shot extends Character {
         this.position.x += this.vector.x * this.clock;
         this.position.y += this.vector.y * this.clock;
 
-        let dist = this.position.dist(this.target.position);
+        let dist = this.position.dist(createVector(this.target._x, this.target._y));
         
-        if (this.target.life > 0 && dist <= (this.width + this.target.width) / 4) {
+        if (this.target._life > 0 && dist <= (this.width + this.target.width) / 4) {
             
-            // this.target.life -= this.power;
+            // this.target.life -= this._power;
             this.target.reduceLife(this.power);
             
-            if (this.target.life < 0) {
-                this.target.life = 0;
+            if (this.target._life < 0) {
+                this.target._life = 0;
             }
             this.life = 0;
             if (this.sound !== null) {
@@ -347,7 +342,7 @@ class Shot extends Character {
     }
 
     isCaptured() {
-        if (this.position.y === this.target.position) {
+        if (this.position.y === this.target._y) {
             return true;
         }
     }
