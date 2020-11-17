@@ -10,6 +10,11 @@
 <body>
     <%- include('../partials/header') %>
     <h1>update info</h1>
+    <h2>11/17</h2>
+    <ul>
+        <li>player.position.yをplayer.yに変更しました</li>
+        <li>パラメータの変更を不可能にしました．</li>
+    </ul>
     <h2>11/16</h2>
     <ul>
         <li>hardmodeを追加しました．チェックボックスにチェックを入れると，パラメータの合計が100以下でないとインスタンスが作成でき無くなります．
@@ -36,10 +41,10 @@
         <ul>
             <li>キャラクターをプログラムで制御して対戦します．エディタにプログラムを記述し，両プレイヤーが「Ready」ボタンを押す(またはCTRL+ENTER)とプログラムが10秒間ループして実行されます．</li>
             <li>攻撃(shot)を命中させて相手のLifeを先に0にした方が勝ちです．</li>
-            <li>使用可能な変数
+            <ul><li>使用可能な変数</li>
                 <li>player.direction : キャラクターが直前まで進行していた向き(top or bottom)</li>
-                <li>player.position.y ：キャラクターのy座標の値</li>
-            </li>
+                <li>player.y ：キャラクターのy座標の値</li>
+            </ul>
         </ul>
     </ol>
 </body>
