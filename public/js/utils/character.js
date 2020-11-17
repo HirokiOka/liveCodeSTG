@@ -9,6 +9,17 @@ class Character {
         this.image = loadImage(imagePath);
     }
 
+    // get position() {
+    //     return this._position;
+    // }
+
+    // set position(value) {
+    //     if (isStart) {
+    //         throw Error("Parameters cannot be changed");
+    //     }
+    //     this._position = value;
+    // }
+
     setVector(x, y) {
         this.vector.set(x, y);
     }
@@ -32,19 +43,85 @@ class Character {
 }
 
 class Player extends Character {
+
     constructor(x, y, w, h, clock, power, imagePath) {
         super(x, y, w, h, 0, imagePath);
-        this.clock = clock;
-        this.power = power;
+        this._x = this.position.x;
+        this._y = this.position.y;
+        this._clock = clock;
+        this._power = power;
         this.direction = 'top';
         this.shotCheckCounter = 0;
         this.shotInterval = 10;
         this.shotArray = null;
-        this.life = 100;
+        this._life = 100;
         this.password = 'password';
         this.code = null;
     }
 
+    //getter
+    get x() {
+        return this._x;
+    }
+
+    get y() {
+        return this._y;
+    }
+
+    get life() {
+        return this._life;
+    }
+
+    get clock() {
+        return this._clock;
+    }
+
+    get power() {
+        return this._power;
+    }
+
+    //setter
+    set x(value) {
+        if (isStart) {
+            throw Error("Parameters cannot be changed");
+        }
+        this._x = value;
+    }
+
+    set y(value) {
+        if (isStart) {
+            throw Error("Parameters cannot be changed");
+        }
+        this._y = value;
+    }
+
+    set life(value) {
+        if (isStart) {
+            throw Error("Parameters cannot be changed");
+        }
+        this._life = value;
+    }
+
+    set clock(value) {
+        if (isStart) {
+            throw Error("Parameters cannot be changed");
+        }
+        this._clock = value;
+    }
+
+    set power(value) {
+        if (isStart) {
+            throw Error("Parameters cannot be changed");
+        }
+        this._power = value;
+    }
+
+    //
+    reduceLife(power) {
+        this._life -= power;
+    }
+
+    //methods
     setTarget(target) {
         this.target = target;
     }
@@ -57,23 +134,13 @@ class Player extends Character {
         this.code = code;
     }
 
-    // moveTo(target) {
-    //     if (target === 'top') {
-    //         this.position.y = 48;
-    //     }else if (target === 'center') {
-    //         this.position.y = 240;
-    //     } else if (target === 'bottom') {
-    //         this.position.y = 432;
-    //     }
-    // }
-
     moveUp () {
-        this.position.y -= this.clock;
+        this._y -= 25;
         this.direction = 'top';
     }
 
     moveDown () {
-        this.position.y += this.clock;
+        this._y += 25;
         this.direction = 'bottom';
     }
 
@@ -88,7 +155,7 @@ class Player extends Character {
     }
 
     enemySearch() {
-        if (this.position.y === this.target.position.y) {
+        if (this._y === this.target._y) {
             return true;
         } else {
             return false;
@@ -108,7 +175,7 @@ class Player extends Character {
         if (this.shotCheckCounter >= 0) {
             for (let i = 0; i < this.shotArray.length; i++) {
                 if (this.shotArray[i].life <= 0) {
-                    this.shotArray[i].set(this.position.x, this.position.y);
+                    this.shotArray[i].set(this._x, this._y);
                     this.shotArray[i].setVectorFromAngle(this.angle);
                     this.shotCheckCounter = -this.shotInterval;
                     break;
@@ -129,19 +196,31 @@ class Player extends Character {
             this.moveDown();
         }
         
-        if (this.position.y <= 48) {
+        if (this._y <= 48) {
             this.direction = 'bottom';
-        } else if (this.position.y >= 432) {
+        } else if (this._y >= 432) {
             this.direction = 'top';
         }
         this.shot();
     }
 
+    draw() {
+        let offsetX = this.width / 2;
+        let offsetY = this.height / 2;
+        push();
+        translate(this._x, this._y);
+        rotate(this.angle);
+        image(this.image, - offsetX, - offsetY,this.width, this.height);
+        pop();   
+    }
+
     update() {
         if (this.life <= 0) { return; }
-        let tx = constrain(this.position.x, 0, width);
-        let ty = constrain(this.position.y, barHeight, height - barHeight);
-        this.position.set(tx, ty);
+        let tx = constrain(this._x, 0, width);
+        let ty = constrain(this._y, barHeight, height - barHeight);
+        // this.position.set(tx, ty);
+        this._x = tx;
+        this._y = ty;
         this.draw();
         this.shotCheckCounter++;
     }
@@ -170,7 +249,7 @@ class TextFighter1 extends Player {
     draw() {
         textSize(this.size);
         textAlign(CENTER, CENTER)
-        text(this.appearance, this.position.x, this.position.y);
+        text(this.appearance, this._x, this._y);
         textAlign(LEFT, BOTTOM);
     }
 }
@@ -185,7 +264,7 @@ class TextFighter2 extends Player {
     draw() {
         textSize(this.size);
         textAlign(CENTER, CENTER)
-        text(this.appearance, this.position.x, this.position.y);
+        text(this.appearance, this._x, this._y);
         textAlign(LEFT, BOTTOM);
     }
 }
@@ -193,9 +272,9 @@ class TextFighter2 extends Player {
 class Fighter extends BaseFighter1 {
     constructor() {
         super();
-        this.life = 100;
-        this.clock = 25;
-        this.power = 25;
+        this._life = 100;
+        this._clock = 25;
+        this._power = 25;
         this.confidentiality = 25;
         this.password = 'pass';
     }
@@ -252,7 +331,8 @@ class Shot extends Character {
         
         if (this.target.life > 0 && dist <= (this.width + this.target.width) / 4) {
             
-            this.target.life -= this.power;
+            // this.target.life -= this.power;
+            this.target.reduceLife(this.power);
             
             if (this.target.life < 0) {
                 this.target.life = 0;
@@ -271,8 +351,6 @@ class Shot extends Character {
             return true;
         }
     }
-
-
 }
 
 class BackgroundStar {

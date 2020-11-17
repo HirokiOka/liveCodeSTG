@@ -171,6 +171,9 @@ function gameStart() {
         aceEditor1.setValue(player1.code);
         aceEditor2.setValue(player2.code);
         
+        player1Terminal.setValue('player1:');
+        player2Terminal.setValue('player2:');
+        
         eval(player1.code);
         eval(player2.code);
         player1Action = setInterval(() => {
