@@ -106,13 +106,12 @@ class Player extends Character {
         this._power = value;
     }
 
-    //
+    //methods
     reduceLife(power) {
         this._life -= power;
         if (this._life < 0) this._life = 0;
     }
 
-    //methods
     setTarget(target) {
         this.target = target;
     }
@@ -197,6 +196,17 @@ class Player extends Character {
             this.direction = 'top';
         }
         this.shot();
+    }
+
+    explode() {
+        push();
+        fill('red');
+        translate(this._x, this._y);
+        for (let i = 0; i < TWO_PI; i+= radians(30)) {
+            square(r * cos(i), r * sin(i), 20);
+        }
+        r+=2;
+        pop();
     }
 
     draw() {

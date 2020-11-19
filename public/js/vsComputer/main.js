@@ -178,6 +178,7 @@ function gameStart() {
         eval(player2.code);
         player1Action = setInterval(() => {
             try {
+                if (gameState === "End") return;
                 player1Loop();
                 player1.isMoved = false;
             } catch (e1) {
@@ -187,6 +188,7 @@ function gameStart() {
 
         player2Action = setInterval(() => {
             try {
+                if (gameState === "End") return;
                 player2Loop();
                 player2.isMoved = false;
             } catch (e2) {

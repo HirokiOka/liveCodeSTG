@@ -5,6 +5,7 @@ const BACKGROUND_STAR_MAX_SPEED = 4;
 const SCREEN_WIDTH = 840;
 const SCREEN_HEIGHT = 380;
 
+let r = 20;
 let round = 1;
 let timer = 10;
 let isRunning = false;
@@ -55,16 +56,20 @@ function draw() {
             textSize(64);
             fill(255);
             text('Draw!\nPress R to Retry', width / 2 - 200, height / 2);
+            player1.explode();
+            player2.explode();
             finalize();
         } else if (player1.life === 0) {
             textSize(64);
             fill(player2Color);
             text('Player2 Win!\nPress R to Retry', width / 2 - 200, height / 2);
+            player1.explode();
             finalize();
         } else if (player2.life == 0) {
             textSize(64);
             fill('blue');
             text('Player1 Win!\nPress R to Retry', width / 2 - 200 , height /2);
+            player2.explode();
             finalize();
         }
         
@@ -118,7 +123,9 @@ function drawParameters() {
 
 function finalize() {
     gameState = "End";
-    noLoop();
+    //characterの動きを止めて，爆発アニメーションのみにしたい
+    // noLoop();
+    isRunning = false;
 }
 
 

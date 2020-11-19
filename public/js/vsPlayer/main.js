@@ -190,6 +190,7 @@ function gameStart() {
         eval(player2.code);
         player1Action = setInterval(() => {
             try {
+                if (gameState === "End") return;
                 player1Loop();
             } catch (e1) {
                 player1Terminal.setValue("player1:" + e1.toString());
@@ -198,6 +199,7 @@ function gameStart() {
 
         player2Action = setInterval(() => {
             try {
+                if (gameState === "End") return;
                 player2Loop();
             } catch (e2) {
                 player2Terminal.setValue("player2:" + e2.toString());
