@@ -23,8 +23,6 @@ let player1Image = '/img/player1.png';
 let player2Image = '/img/player2.png';
 let shotImage = '/img/viper_shot.png';
 let misakiFont = null;
-let explosionSound = null;
-let winSound = null;
 const backgroundColor = "#121259";
 
 let retryButton;

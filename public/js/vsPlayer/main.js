@@ -192,6 +192,7 @@ function gameStart() {
             try {
                 if (gameState === "End") return;
                 player1Loop();
+                player1.isMoved = false;
             } catch (e1) {
                 player1Terminal.setValue("player1:" + e1.toString());
             }
@@ -201,6 +202,7 @@ function gameStart() {
             try {
                 if (gameState === "End") return;
                 player2Loop();
+                player2.isMoved = false;
             } catch (e2) {
                 player2Terminal.setValue("player2:" + e2.toString());
             }

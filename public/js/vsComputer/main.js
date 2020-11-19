@@ -1,7 +1,15 @@
 characterProgrammingInitialize();
 
+let shotSound = new Sound();
+shotSound.load('./sound/explosion.mp3', (error) => {
+    if (error != null) {
+        alert('ファイルの読み込みエラーです．');
+        return;
+    }
+});
+
 let exSound = new Sound();
-exSound.load('./sound/explosion.mp3', (error) => {
+exSound.load('./sound/small_explosion1.mp3', (error) => {
     if (error != null) {
         alert('ファイルの読み込みエラーです．');
         return;
@@ -94,15 +102,18 @@ function initialize() {
     player1.setTarget(player2);
     player2.setTarget(player1);
 
+    player1.setSound(exSound);
+    player2.setSound(exSound);
+
     for (let i = 0; i < SHOT_MAX_COUNT; i++) {
         player1ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
         player1ShotArray[i].setTarget(player2);
         player1ShotArray[i].setPower(player1.power);
-        player1ShotArray[i].setSound(exSound);
+        player1ShotArray[i].setSound(shotSound);
         player2ShotArray[i] = new Shot(0, 0, 32, 32, shotImage);
         player2ShotArray[i].setTarget(player1);
         player2ShotArray[i].setPower(player2.power);
-        player2ShotArray[i].setSound(exSound);
+        player2ShotArray[i].setSound(shotSound);
     }
 
     player1.setShotArray(player1ShotArray);

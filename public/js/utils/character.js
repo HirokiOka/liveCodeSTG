@@ -47,6 +47,7 @@ class Player extends Character {
         this.password = 'password';
         this.code = null;
         this.isMoved = false;
+        this.sound = null;
     }
 
     //getter
@@ -104,6 +105,10 @@ class Player extends Character {
             throw Error("Parameters cannot be changed");
         }
         this._power = value;
+    }
+
+    setSound(sound) {
+        this.sound = sound;
     }
 
     //methods
@@ -336,7 +341,6 @@ class Shot extends Character {
         
         if (this.target._life > 0 && dist <= (this.width + this.target.width) / 4) {
             
-            // this.target.life -= this._power;
             this.target.reduceLife(this.power);
             
             if (this.target._life < 0) {
@@ -344,8 +348,12 @@ class Shot extends Character {
             }
             this.life = 0;
             if (this.sound !== null) {
-                this.sound.play();
-            }
+                if (this.target._life === 0) {
+                    this.target.sound.play();
+                } else {
+                    this.sound.play();
+                }
+            } 
             
         }
         this.draw();
