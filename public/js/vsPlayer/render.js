@@ -107,7 +107,7 @@ function drawParameters() {
     // } else {
     //     rect(5, height - 25, 400, 20);
     // }
-    rect(width / 2, height - 25, constrain(player1.life, 0, 400), 20);
+    rect(5, height - 25, constrain(player1.life, 0, 400), 20);
     
     noStroke();
     text("player1 Life", 5, height - 30);
