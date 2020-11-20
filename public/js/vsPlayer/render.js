@@ -9,9 +9,9 @@ let r = 20;
 let round = 1;
 let timer = 10;
 let isRunning = false;
-// let gameState;
 let isStart = false;
-let barHeight;
+let topEdge;
+let bottomEdge;
 
 let player1 = null;
 let player2 = null;
@@ -34,7 +34,8 @@ function setup() {
     ctx = document.getElementById('defaultCanvas0').getContext('2d');
     textFont("arial black");
     gameState = "Programming";
-    barHeight = height / 10;
+    topEdge = height / 10;
+    bottomEdge = height - topEdge;
     if (playerNum == 1) {
         aceEditor2.setOption("readOnly", true);
     } else if (playerNum == 2) {
@@ -90,8 +91,8 @@ function draw() {
         }
         
         fill(0);
-        rect(0, 0, width, barHeight);
-        rect(0, height - 50, width, barHeight);
+        rect(0, 0, width, topEdge);
+        rect(0, height - 50, width, topEdge);
         drawParameters();
     }
 }

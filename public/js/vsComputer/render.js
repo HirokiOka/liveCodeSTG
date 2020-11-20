@@ -11,8 +11,8 @@ let timer = 10;
 let isRunning = false;
 // let gameState;
 let isStart = false;
-let barHeight;
-
+let topEdge;
+let bottom;
 let player1 = null;
 let player2 = null;
 let player1ShotArray = [];
@@ -32,7 +32,8 @@ function setup() {
     canvas.parent('canvas');
     textFont("arial black");
     gameState = "Programming";
-    barHeight = height / 10;
+    topEdge = height / 10;
+    bottomEdge = height - topEdge;
 }
 
 function draw() {
@@ -72,8 +73,8 @@ function draw() {
         }
         
         fill(0);
-        rect(0, 0, width, barHeight);
-        rect(0, height - 50, width, barHeight);
+        rect(0, 0, width, topEdge);
+        rect(0, height - 50, width, topEdge);
         drawParameters();
     }
 }

@@ -227,7 +227,7 @@ class Player extends Character {
     update() {
         if (this.life <= 0) { return; }
         let tx = constrain(this._x, 0, width);
-        let ty = constrain(this._y, barHeight, height - barHeight);
+        let ty = constrain(this._y, topEdge, bottomEdge);
         // this.position.set(tx, ty);
         this._x = tx;
         this._y = ty;
@@ -346,18 +346,25 @@ class Shot extends Character {
             if (this.target._life < 0) {
                 this.target._life = 0;
             }
+
             this.life = 0;
+
             if (this.sound !== null && this.target.sound !== null) {
                 if (this.target._life === 0) {
                     this.target.sound.play();
-                    console.log("ex sound played");
                 } else {
+                    //点滅
+                    // this.target.
                     this.sound.play();
                 }
             } 
             
         }
         this.draw();
+    }
+
+    newMethod() {
+        console.log("ex sound played");
     }
 
     isCaptured() {
