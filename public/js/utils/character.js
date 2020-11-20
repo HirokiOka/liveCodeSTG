@@ -347,9 +347,10 @@ class Shot extends Character {
                 this.target._life = 0;
             }
             this.life = 0;
-            if (this.sound !== null) {
+            if (this.sound !== null && this.target.sound !== null) {
                 if (this.target._life === 0) {
                     this.target.sound.play();
+                    console.log("ex sound played");
                 } else {
                     this.sound.play();
                 }
