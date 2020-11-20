@@ -236,8 +236,8 @@ socket.on('create', msg => {
     eval(msg.code); 
     console.log('created!');
     if (player1 && player2) {
-        player1.life *= 20;
-        player2.life *= 20;
+        player1.life *= 10;
+        player2.life *= 10;
         player1.power *= 0.8;
         player2.power *= 0.8;
         initialize();
