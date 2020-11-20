@@ -339,7 +339,7 @@ class Shot extends Character {
 
         let dist = this.position.dist(createVector(this.target._x, this.target._y));
         
-        if (this.target._life > 0 && dist <= (this.width + this.target.width) / 4) {
+        if (this.target._life > 0 && dist <= (this.width + this.target.width) / 3) {
             
             this.target.reduceLife(this.power);
             
