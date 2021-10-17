@@ -8,21 +8,23 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const port = process.env.PORT || 3000;
-let dbClient = new Client({
-    user: process.env.USER,
-    host: process.env.HOST,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
-    port: process.env.DBPORT
-});
+ let dbClient = new Client({
+     user: process.env.USER,
+     host: process.env.HOST,
+     database: process.env.DATABASE,
+     password: process.env.PASSWORD,
+     port: process.env.DBPORT
+ });
 //開発環境用DB
-// let dbClient = new Client({
-//     user: process.env.DEVELOPMENTUSER,
-//     host: process.env.DEVELOPMENTHOST,
-//     database: process.env.DEVELOPMENTDATABASE,
-//     password: process.env.DEVELOPMENTPASSWORD,
-//     port: process.env.DEVELOPMENTDBPORT
-// });
+/*
+let dbClient = new Client({
+    user: process.env.DEVELOPMENTUSER,
+    host: process.env.DEVELOPMENTHOST,
+    database: process.env.DEVELOPMENTDATABASE,
+    password: process.env.DEVELOPMENTPASSWORD,
+    port: process.env.DEVELOPMENTDBPORT
+});
+*/
 let player1 = false;
 let player2 = false;
 let clientId = 0;
@@ -86,17 +88,17 @@ function matching() {
 
 app.get('/vs-player', (req, res) => {
     //ここの処理もっとよくできそう
-    if (player1 === false) {
+    if (!player1) {
         res.render('vsPlayer', { playerNum: 1 });
         player1 = true;
         // console.log("player1 joined");
-    } else if (player2 === false) {
+    } else if (!player2) {
         res.render('vsPlayer', { playerNum: 2 });
         player2 = true;
         // console.log("player2 joined");
     }
 
-    if (player1 === true && player2 === true) {
+    if (player1 && player2) {
         player1 = false;
         player2 = false;
     }
