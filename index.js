@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const port = process.env.PORT || 3000;
+/*
  let dbClient = new Client({
      user: process.env.USER,
      host: process.env.HOST,
@@ -15,8 +16,8 @@ const port = process.env.PORT || 3000;
      password: process.env.PASSWORD,
      port: process.env.DBPORT
  });
+*/
 //開発環境用DB
-/*
 let dbClient = new Client({
     user: process.env.DEVELOPMENTUSER,
     host: process.env.DEVELOPMENTHOST,
@@ -24,7 +25,6 @@ let dbClient = new Client({
     password: process.env.DEVELOPMENTPASSWORD,
     port: process.env.DEVELOPMENTDBPORT
 });
-*/
 let player1 = false;
 let player2 = false;
 let clientId = 0;
