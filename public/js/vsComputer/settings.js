@@ -138,9 +138,3 @@ player2Terminal.setOptions({
 });
 player2Terminal.setValue("player2:");
 player2Terminal.$blockScrolling = Infinity;
-
-
-
-
-
-
