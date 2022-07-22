@@ -24,7 +24,7 @@ let dbClient = new Client({
     password: process.env.DEVELOPMENTPASSWORD,
     port: process.env.DEVELOPMENTDBPORT
 });
-*/
+ */
 let player1 = false;
 let player2 = false;
 let clientId = 0;
