@@ -1,4 +1,3 @@
-
 const backgroundColor = "#121259";
 const SHOT_MAX_COUNT = 10;
 let player = null;
@@ -7,10 +6,14 @@ let shotArray = [];
 let shotImage = '/img/viper_shot.png';
 let playerImage = '/img/player1.png';
 let barHeight;
+let topEdge;
+let bottomEdge;
 
 function setup() {
     let canvas = createCanvas(840, 480);
     canvas.parent('canvas');
+    topEdge = height / 10;
+    bottomEdge = height - topEdge;
     player = new Fighter();
     enemy = new Fighter();
     player.setVectorFromAngle(HALF_PI);

@@ -44,6 +44,7 @@ function draw() {
         });
 
         player1.update();
+
         player2.update();
         player1ShotArray.map((v) => {
             v.update();
@@ -119,7 +120,6 @@ function drawParameters() {
 }
 
 
-
 function finalize() {
     gameState = "End";
     //characterの動きを止めて，爆発アニメーションのみにしたい
@@ -131,6 +131,3 @@ function finalize() {
 window.addEventListener("beforeunload", (e) => {
     e.returnValue = "ページを離れます．よろしいですか？"
 });
-
-
-

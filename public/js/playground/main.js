@@ -2,6 +2,7 @@ const gameInterval = 10000;
 let isRunning = false;
 let timer = 10;
 let startTime = 0;
+let isStart = false;
 
 let editor = ace.edit("player-editor");
 editor.setOptions({
