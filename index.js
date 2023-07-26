@@ -5,8 +5,10 @@ const ejs = require('ejs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const dotenv = require('dotenv');
-dotenv.config();
+//dotenv.config();
+const port = 3000;
 
+/*
 const port = process.env.PORT || 3000;
  let dbClient = new Client({
      user: process.env.USER,
@@ -15,7 +17,6 @@ const port = process.env.PORT || 3000;
      password: process.env.PASSWORD,
      port: process.env.DBPORT
  });
-/*
 //開発環境用DB
 let dbClient = new Client({
     user: process.env.DEVELOPMENTUSER,
@@ -38,8 +39,10 @@ app.set('ejs', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+/*
 dbClient.connect()
             .then(() => console.log('DB Connected successfully'));
+*/
 
 app.get('/', (req, res) => {
     res.render('top');
@@ -119,18 +122,17 @@ app.get('/observer', (req, res) => {
 
 //socketioの処理
 io.on('connection', socket => {
-
     //プレイヤーから送られてきた戦略のコードを同じroomのプレイヤーに送る
     socket.on('player1', msg => {
         let query = {
             text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.player1Code]
         };
-
+        /*
         dbClient.query(query, (err, res) => {
             console.log(err, res);
         });
-
+        */
         io.to(msg.roomId).emit('player1', {
             "player1Code": msg.player1Code,
         });
@@ -141,9 +143,11 @@ io.on('connection', socket => {
             text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.player2Code]
         };
+      /*
         dbClient.query(query, (err, res) => {
             console.log(err, res);
         });
+      */
         
         io.to(msg.roomId).emit('player2', {
             "player2Code": msg.player2Code,
@@ -155,9 +159,11 @@ io.on('connection', socket => {
             text: 'INSERT INTO vscomputer_code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.code]
         };
+      /*
         dbClient.query(query, (err, res) => {
             console.log(err, res);
         });
+        */
     });
 
     socket.on('create', msg => {
@@ -197,10 +203,14 @@ io.on('connection', socket => {
 });
 
 http.listen(port, () => {
-    console.log(`Server is up on port ${port}`);
+  const url = `http://localhost:${port}`;
+  console.log(`Server is up on ${url}`);
 });
 
 http.on('close', (e) => {
+  /*
     dbClient.end();
+  */
     console.log('closed');
-})
+
+});
