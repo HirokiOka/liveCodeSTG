@@ -1,31 +1,11 @@
-const { Client } = require('pg');
 const express = require('express');
 const app = express();
 const ejs = require('ejs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const dotenv = require('dotenv');
-//dotenv.config();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-/*
-const port = process.env.PORT || 3000;
- let dbClient = new Client({
-     user: process.env.USER,
-     host: process.env.HOST,
-     database: process.env.DATABASE,
-     password: process.env.PASSWORD,
-     port: process.env.DBPORT
- });
-//開発環境用DB
-let dbClient = new Client({
-    user: process.env.DEVELOPMENTUSER,
-    host: process.env.DEVELOPMENTHOST,
-    database: process.env.DEVELOPMENTDATABASE,
-    password: process.env.DEVELOPMENTPASSWORD,
-    port: process.env.DEVELOPMENTDBPORT
-});
- */
 let player1 = false;
 let player2 = false;
 let clientId = 0;
@@ -33,29 +13,6 @@ let roomId = 1;
 let activeRooms = [];
 let waitingUsers = [];
 let matchCount = 0;
-
-
-app.set('ejs', ejs.renderFile);
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-
-/*
-dbClient.connect()
-            .then(() => console.log('DB Connected successfully'));
-*/
-
-app.get('/', (req, res) => {
-    res.render('top');
-});
-
-app.get('/waiting', (req, res) => {
-    //ユーザにIDを割り振り，waitingキューに追加
-    clientId++;
-    waitingUsers.push(clientId);
-    console.log(`waitingUsers:${waitingUsers}`);
-    res.render('waiting', { clientId: clientId });
-    matching();
-});
 
 function matching() {
     //待ちキューが奇数or空になるまでペアをマッチングする
@@ -74,6 +31,7 @@ function matching() {
                 });
                 matchCount++;
                 socket.join(roomId);
+
                 if (matchCount % 2 === 0) {
                     let index = activeRooms.indexOf(parseInt(roomId, 10));
                     if (index === -1) {
@@ -81,13 +39,32 @@ function matching() {
                     }
                     console.log(`active rooms: ${activeRooms}`);
                 }
+
             });
             roomId++;
-
             console.log(`User ${selectedUsers} matched!`);
         }
     }
 }
+
+app.set('ejs', ejs.renderFile);
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+
+app.get('/', (_, res) => {
+    res.render('top');
+});
+
+app.get('/waiting', (_, res) => {
+    //ユーザにIDを割り振り，waitingキューに追加
+    clientId++;
+    waitingUsers.push(clientId);
+    console.log(`waitingUsers:${waitingUsers}`);
+    res.render('waiting', { clientId: clientId });
+    matching();
+});
+
 
 app.get('/vs-player', (req, res) => {
     //ここの処理もっとよくできそう
@@ -108,15 +85,15 @@ app.get('/vs-player', (req, res) => {
 
 });
 
-app.get('/vs-computer', (req, res) => {
+app.get('/vs-computer', (_, res) => {
     res.render('vsComputer');
 });
 
-app.get('/playground', (req, res) => {
+app.get('/playground', (_, res) => {
     res.render('playground');
 });
 
-app.get('/observer', (req, res) => {
+app.get('/observer', (_, res) => {
     res.render('observer', { activeRooms });
 });
 
@@ -128,42 +105,27 @@ io.on('connection', socket => {
             text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.player1Code]
         };
-        /*
-        dbClient.query(query, (err, res) => {
-            console.log(err, res);
-        });
-        */
         io.to(msg.roomId).emit('player1', {
             "player1Code": msg.player1Code,
         });
     });
 
     socket.on('player2', msg => {
-        let query = {
+        const query = {
             text: 'INSERT INTO code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.player2Code]
         };
-      /*
-        dbClient.query(query, (err, res) => {
-            console.log(err, res);
-        });
-      */
-        
+
         io.to(msg.roomId).emit('player2', {
             "player2Code": msg.player2Code,
         });
     });
 
     socket.on('vscomputer', msg => {
-        let query = {
+        const query = {
             text: 'INSERT INTO vscomputer_code_log (code, timestamp) VALUES($1, current_timestamp)',
             values: [msg.code]
         };
-      /*
-        dbClient.query(query, (err, res) => {
-            console.log(err, res);
-        });
-        */
     });
 
     socket.on('create', msg => {
@@ -174,7 +136,7 @@ io.on('connection', socket => {
 
     //ゲームが終了した時の処理
     socket.on('gameEnd', msg => {
-        console.log(`${msg.roomId} Game End`);
+        console.log(`${msg.roomId} Game over`);
     });
 
     //クライアント(待ちユーザ)の接続が切れた時の処理
@@ -185,7 +147,6 @@ io.on('connection', socket => {
             }
         });
         console.log(`client ${msg.clientId} disconnected`);
-        // console.log(`waitingUsers: ${waitingUsers}`);
     });
 
     //プレイヤーの接続が切れた時の処理
@@ -194,7 +155,7 @@ io.on('connection', socket => {
             'info': 'disconnected'
         });
         //activeRoomsから指定の要素を削除する
-        let index = activeRooms.indexOf(parseInt(msg.roomId, 10));
+        const index = activeRooms.indexOf(parseInt(msg.roomId, 10));
         if (index > -1) {
             activeRooms.splice(index, 1);
         }
@@ -202,15 +163,11 @@ io.on('connection', socket => {
     });
 });
 
-http.listen(port, () => {
-  const url = `http://localhost:${port}`;
+http.listen(PORT, () => {
+  const url = `http://localhost:${PORT}`;
   console.log(`Server is up on ${url}`);
 });
 
 http.on('close', (e) => {
-  /*
-    dbClient.end();
-  */
     console.log('closed');
-
 });
