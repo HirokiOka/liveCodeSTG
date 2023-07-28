@@ -9,7 +9,6 @@ function player1Select() {
 
 function player2Select() {
     location.href = "/game";
-    
 }
 
 function spectatorSelect() {

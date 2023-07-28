@@ -1,10 +1,10 @@
 const backgroundColor = "#121259";
 const SHOT_MAX_COUNT = 10;
+const shotImage = '/img/viper_shot.png';
+const playerImage = '/img/player1.png';
 let player = null;
 let enemy = null;
 let shotArray = [];
-let shotImage = '/img/viper_shot.png';
-let playerImage = '/img/player1.png';
 let barHeight;
 let topEdge;
 let bottomEdge;
@@ -39,5 +39,3 @@ function draw() {
     }
     text(timer, width/2 - 20, 30);
 }
-
-

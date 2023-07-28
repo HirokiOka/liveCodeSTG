@@ -18,15 +18,13 @@ function guess(player, password) {
     }
 }
 
-Array.prototype.sliceByIndex = function(idxs){
-	let items = this;
-	let slicedVals = idxs.map(function(idx){
-		return items[idx];
-	});
+Array.prototype.sliceByIndex = (idxs) => {
+	const items = this;
+	const slicedVals = idxs.map((idx) => items[idx]);
 	return slicedVals;
 }
 
-const range = function(min,max){
+const range = (min,max) => {
 	let nums = [];
 	for (let num = min; num <= max; num++){
 		nums.push(num);
@@ -34,19 +32,17 @@ const range = function(min,max){
 	return nums;
 }
 
-Array.prototype.repeatedPermutation = function(n){
-	let items = this;
-	let length = items.length;
+Array.prototype.repeatedPermutation = (n) => {
+	const items = this;
+	const length = items.length;
 
-	let idxs = range(0,length-1);
-	let idxPerms = idxs.map(function(idx){
-		return [idx];
-	});
+	const idxs = range(0,length-1);
+	let idxPerms = idxs.map((idx) => [idx]);
 
 	for (let i = 0; i < n-1; i++){
 		let nextIdxPerms = [];
-		idxPerms.forEach(function(idxPerm){
-			idxs.forEach(function(idx){
+		idxPerms.forEach((idxPerm) => {
+			idxs.forEach((idx) => {
 				let nextIdxPerm = idxPerm.slice(0);
 				nextIdxPerm.push(idx);
 				nextIdxPerms.push(nextIdxPerm);
@@ -55,9 +51,7 @@ Array.prototype.repeatedPermutation = function(n){
 		idxPerms = nextIdxPerms.slice(0);
 	}
 
-	perms = idxPerms.map(function(idxPerm){
-		return items.sliceByIndex(idxPerm);
-	});
+	perms = idxPerms.map((idxPerm) => items.sliceByIndex(idxPerm));
 	return perms;
 }
 
@@ -87,5 +81,3 @@ const bruteForce = (player, passwordLength) => {
         commandOutput.setValue(message);
     })
 }
-
-

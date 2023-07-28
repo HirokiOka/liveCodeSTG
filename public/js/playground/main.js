@@ -3,8 +3,9 @@ let isRunning = false;
 let timer = 10;
 let startTime = 0;
 let isStart = false;
+let playerAction = null;
 
-let editor = ace.edit("player-editor");
+const editor = ace.edit("player-editor");
 editor.setOptions({
     fontSize: 18,
     theme: "ace/theme/chaos",
@@ -18,15 +19,13 @@ editor.setOptions({
 editor.setValue(`//Player \nfunction playerLoop() {\n\n}`);
 editor.$blockScrolling = Infinity;
 
-let playerAction = null;
-
 window.addEventListener("keydown", (e) => {
     if (e.keyCode === 13 && e.ctrlKey) {
         runCode();
     }
 });
 
-let runButton = new Vue({
+const runButton = new Vue({
     el: "#run-button",
     methods: {
         onClick() {
@@ -53,5 +52,4 @@ function runCode() {
         isRunning = false;
         timer = 10;
     }, gameInterval);
-    
 }
